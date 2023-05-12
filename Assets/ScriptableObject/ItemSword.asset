@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2859fed5e34cebd44803ab4f5e51f441, type: 3}
-  m_Name: ItemBook
+  m_Name: ItemSword
   m_EditorClassIdentifier: 
-  ObjectName: Book
-  Description: ReadableBook
-  Stackable: 1
+  ObjectName: Sword
+  Description: SharpSword
+  Stackable: 0
   Count: 1
-  Icon: {fileID: 21300000, guid: d98957d25635e1844914d42e7a142b29, type: 3}
+  Icon: {fileID: 21300000, guid: 82e232c4b7118c044b006d312574bb11, type: 3}
