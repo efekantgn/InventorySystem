@@ -468,6 +468,7 @@ MonoBehaviour:
   Name: {fileID: 3178117159797580450}
   Count: {fileID: 3178117158885566829}
   Description: {fileID: 3178117158671545621}
+  Inventory: {fileID: 0}
 --- !u!114 &7846102246926831176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -482,6 +483,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GeneralPanel: {fileID: 5655508336273248182}
   UsagePanel: {fileID: 8040462850799348808}
+  ParentAfterDrag: {fileID: 0}
 --- !u!1 &3178117159797580450
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,7 +817,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

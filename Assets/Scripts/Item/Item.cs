@@ -13,7 +13,7 @@ public class Item : MonoBehaviour
     public GameObject Count;
     public GameObject Description;
 
-    private Inventory _Inventory;
+    public Inventory Inventory;
     private GUIItemMouseEvents _GUIItemMouseEvents;
 
     #region UnityCallBacks
@@ -21,7 +21,7 @@ public class Item : MonoBehaviour
     {
         
         _GUIItemMouseEvents=GetComponent<GUIItemMouseEvents>();
-        _Inventory= GameObject.FindObjectOfType<Inventory>();
+        Inventory= GameObject.FindObjectOfType<Inventory>();
         if (!ItemData.Stackable)
         {
             ItemData.Count = 1;
@@ -80,11 +80,11 @@ public class Item : MonoBehaviour
         ItemData.Count--;
         if (ItemData.Count>=1)
         {
-            _Inventory.UpdateUISlot(ItemData);
+            Inventory.UpdateUISlot(ItemData);
         }
         else
         {
-            _Inventory.RemoveItem(this); 
+            Inventory.RemoveItem(this); 
         }
     }
 
@@ -92,15 +92,28 @@ public class Item : MonoBehaviour
     {
         if (count>=ItemData.Count)
         {
-            _Inventory.RemoveItem(this); 
+            Inventory.RemoveItem(this); 
         }
         else
         {
             ItemData.Count=ItemData.Count-count;
-            _Inventory.UpdateUISlot(ItemData);
+            Inventory.UpdateUISlot(ItemData);
         }
     }
-    
+
+    public void MoveItem(int count)
+    {
+        if (count >= ItemData.Count)
+        {
+            Inventory.RemoveItem(this);
+        }
+        else
+        {
+            ItemData.Count = ItemData.Count - count;
+            Inventory.UpdateUISlot(ItemData);
+        }
+    }
+
     public void InitializeDropPanel()
     {
         GameObject dropPanel = MainPanel.Instance.DropPanel;
