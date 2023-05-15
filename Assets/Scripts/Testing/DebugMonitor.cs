@@ -9,17 +9,20 @@ public class DebugMonitor : MonoBehaviour
     public TextMeshProUGUI BackpackList;
 
     public Inventory Inventory;
+    public InventorySlot Pocket;
+    public InventorySlot Backpack;
+
 
     private void Update()
     {
         PocketList.text = "";
         BackpackList.text = "";
 
-        foreach (var item in Inventory.PocketList)
+        foreach (var item in Pocket.Items)
         {
             PocketList.text += item.Name + "\n";
         }
-        foreach (var item in Inventory.BackpackList)
+        foreach (var item in Backpack.Items)
         {
             BackpackList.text += item.Name + "\n";
         }

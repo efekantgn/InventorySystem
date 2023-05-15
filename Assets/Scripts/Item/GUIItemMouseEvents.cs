@@ -66,9 +66,11 @@ public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerE
         Debug.Log("Begin");
         GetComponent<Button>().interactable= false;
         ParentAfterDrag = transform.parent;
+        GetComponentInParent<InventorySlot>().RemoveItem(_Item, InventorySlot.ItemOperation.Move);
         transform.SetParent( transform.root);
         transform.SetAsLastSibling();
         _Item.Icon.GetComponent<Image>().raycastTarget = false;
+
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -81,6 +83,7 @@ public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerE
     {
         Debug.Log("End");
         transform.SetParent( ParentAfterDrag);
+        GetComponentInParent<InventorySlot>().MoveItemToItems(_Item);
         _Item.Icon.GetComponent<Image>().raycastTarget = true;
         GetComponent<Button>().interactable = true;
     }

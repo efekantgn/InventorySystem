@@ -13,7 +13,6 @@ public class Item : MonoBehaviour
     public GameObject Count;
     public GameObject Description;
 
-    public Inventory Inventory;
     private GUIItemMouseEvents _GUIItemMouseEvents;
 
     #region UnityCallBacks
@@ -21,7 +20,6 @@ public class Item : MonoBehaviour
     {
         
         _GUIItemMouseEvents=GetComponent<GUIItemMouseEvents>();
-        Inventory= GameObject.FindObjectOfType<Inventory>();
         if (!ItemData.Stackable)
         {
             ItemData.Count = 1;
@@ -77,42 +75,32 @@ public class Item : MonoBehaviour
     public void UseItem() 
     {
         Debug.Log("ItemUsed");
+        InventorySlot inventorySlot= GetComponentInParent<InventorySlot>();
         ItemData.Count--;
-        if (ItemData.Count>=1)
+        if (ItemData.Count<=0)
         {
-            Inventory.UpdateUISlot(ItemData);
+            inventorySlot.RemoveItem(this,InventorySlot.ItemOperation.Remove);
+            //Inventory.UpdateUISlot(ItemData);
         }
-        else
-        {
-            Inventory.RemoveItem(this); 
-        }
+        inventorySlot.UpdateAllItemsUI();
     }
 
     public void DropItem(int count) 
     {
-        if (count>=ItemData.Count)
+        Debug.Log("DropItem");
+        InventorySlot inventorySlot = GetComponentInParent<InventorySlot>();
+        ItemData.Count-=count;
+        if (ItemData.Count<=0)
         {
-            Inventory.RemoveItem(this); 
+            // Inventory.RemoveItem(this); 
+            inventorySlot.RemoveItem(this, InventorySlot.ItemOperation.Remove);
+
         }
-        else
-        {
-            ItemData.Count=ItemData.Count-count;
-            Inventory.UpdateUISlot(ItemData);
-        }
+        
+         inventorySlot.UpdateAllItemsUI();
     }
 
-    public void MoveItem(int count)
-    {
-        if (count >= ItemData.Count)
-        {
-            Inventory.RemoveItem(this);
-        }
-        else
-        {
-            ItemData.Count = ItemData.Count - count;
-            Inventory.UpdateUISlot(ItemData);
-        }
-    }
+    
 
     public void InitializeDropPanel()
     {
