@@ -8,6 +8,9 @@ public class MainPanel : MonoBehaviour
     public GameObject CraftPanel;
     public GameObject DropPanel;
 
+    public GameObject EquipedInventorySlot;
+    public GameObject PocketInventorySlot;
+    public GameObject BackpackInventorySlot;
 
     public static MainPanel Instance;
 

@@ -12,13 +12,23 @@ public class Item : MonoBehaviour
     public GameObject Name;
     public GameObject Count;
     public GameObject Description;
+    public GameObject OldInventorySlot;
+
+    public bool IsEquiped;
 
     private GUIItemMouseEvents _GUIItemMouseEvents;
+    private GameObject _EquipedSlot;
+    private GameObject _PocketSlot;
+    private GameObject _BackpackSlot;
+
+
 
     #region UnityCallBacks
     private void Start()
     {
-        
+        _EquipedSlot = MainPanel.Instance.EquipedInventorySlot;
+        _PocketSlot = MainPanel.Instance.PocketInventorySlot;
+        _BackpackSlot = MainPanel.Instance.BackpackInventorySlot;
         _GUIItemMouseEvents=GetComponent<GUIItemMouseEvents>();
         if (!ItemData.Stackable)
         {
@@ -32,7 +42,13 @@ public class Item : MonoBehaviour
 
     public void OnClickItemButton()
     {
-        UseItem();
+        if (ItemData.Type == ItemType.Consumable)
+            UseItem();
+        else if (ItemData.Type == ItemType.Equipment)
+            if (IsEquiped)
+                UnEquipItem();
+            else
+                EquipItem();
     }
     public void OnClickUseButton()
     {
@@ -60,6 +76,9 @@ public class Item : MonoBehaviour
     #endregion
 
     #region ScriptFunctions
+
+    
+
     public void SetItem(ItemData itemData)
     {
         ItemData= itemData;
@@ -101,6 +120,36 @@ public class Item : MonoBehaviour
     }
 
     
+    public void EquipItem()
+    {
+        //Remove from current Items
+        //Remove from current ItemsUI
+        IsEquiped = true ;
+        InventorySlot oldInventorySlot = GetComponentInParent<InventorySlot>();
+        oldInventorySlot.RemoveItem(this, InventorySlot.ItemOperation.Move);
+        OldInventorySlot = transform.parent.gameObject;
+
+        gameObject.transform.SetParent(_EquipedSlot.transform);
+
+        //Add to parent Items
+        //Add to parent ItemsUI
+        InventorySlot newInventorySlot = GetComponentInParent<InventorySlot>();
+        newInventorySlot.MoveItem(this);
+    }
+
+    public void UnEquipItem()
+    {
+        InventorySlot oldInventorySlot = GetComponentInParent<InventorySlot>();
+        oldInventorySlot.RemoveItem(this, InventorySlot.ItemOperation.Move);
+
+        gameObject.transform.SetParent(OldInventorySlot.transform);
+
+        InventorySlot newInventorySlot = GetComponentInParent<InventorySlot>();
+        newInventorySlot.MoveItem(this);
+        IsEquiped= false ;
+        OldInventorySlot = null;
+
+    }
 
     public void InitializeDropPanel()
     {

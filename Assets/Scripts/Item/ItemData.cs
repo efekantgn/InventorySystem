@@ -9,4 +9,5 @@ public class ItemData
     public bool Stackable;
     public int Count;
     public Sprite Icon;
+    public ItemType Type;
 }

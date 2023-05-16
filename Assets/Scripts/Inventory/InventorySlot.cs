@@ -10,6 +10,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
 {
    
     public List<ItemData> Items=new List<ItemData>();
+    public List<ItemSO> Itemso=new List<ItemSO>();
     public List<GameObject> ItemsUI = new List<GameObject>();
 
     public GameObject UISlotElement;
@@ -23,6 +24,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
 
     public void AddItem(ItemSO itemSO)
     {
+        Itemso.Add(itemSO);
         ItemData tmp = ConvertToItemData(itemSO);
         AddItemToItems(tmp);
 
@@ -34,6 +36,23 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         RemoveItemFromInventory(item.ItemData);
         RemoveItemFromItemsUI(item.gameObject, itemOperation);
 
+    }
+    public void MoveItem(Item item)
+    {
+        bool hasInventory = HasItemsInInventory(item.ItemData);
+
+        if (item.ItemData.Stackable && hasInventory)
+        {
+            int ind = GetIndexOfItemFromItemUI(item.gameObject);
+            Items[ind].Count = Items[ind].Count + item.ItemData.Count;
+            UpdateAllItemsUI();
+        }
+        else
+        {
+            Items.Add(item.ItemData);
+            ItemsUI.Add(item.gameObject);
+            UpdateAllItemsUI();
+        }
     }
 
     #region BackgroundListOperations
@@ -54,30 +73,14 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         }
     }
 
-    public void MoveItemToItems(Item item)
-    {
-        bool hasInventory = HasItemsInInventory(item.ItemData);
 
-        if (item.ItemData.Stackable && hasInventory)
-        {
-            int ind = GetIndexOfItemFromItemUI(item.gameObject);
-            Items[ind].Count = Items[ind].Count + item.ItemData.Count;
-            UpdateAllItemsUI();
-        }
-        else
-        {
-            Items.Add(item.ItemData);
-            ItemsUI.Add(item.gameObject);
-            //AddItemToItemsUI(item.ItemData);
-            //UpdateUIList
-            UpdateAllItemsUI();
-        }
-    }
 
     public void RemoveItemFromInventory(ItemData itemData)
     {
         Items.Remove(itemData);
     }
+
+    
 
     #endregion
 
@@ -120,14 +123,18 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     #endregion
 
     #region ScriptNeededFunctions
+
+    
+
     public ItemData ConvertToItemData(ItemSO itemSO)
     {
         ItemData data = new ItemData();
-        data.Name = itemSO.ObjectName;
-        data.Icon = itemSO.Icon;
-        data.Description = itemSO.Description;
-        data.Stackable = itemSO.Stackable;
-        data.Count = itemSO.Count;
+        data.Name = itemSO.ItemName;
+        data.Icon = itemSO.ItemIcon;
+        data.Description = itemSO.ItemDescription;
+        data.Stackable = itemSO.ItemStackable;
+        data.Count = itemSO.ItemCount;
+        data.Type= itemSO.ItemType;
         return data;
     }
 
@@ -169,6 +176,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     }
 
     #endregion
+
     #region Interface
     public void OnDrop(PointerEventData eventData)
     {

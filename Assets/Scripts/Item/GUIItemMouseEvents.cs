@@ -65,6 +65,7 @@ public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerE
     {
         Debug.Log("Begin");
         GetComponent<Button>().interactable= false;
+        _Item.OldInventorySlot = transform.parent.gameObject;
         ParentAfterDrag = transform.parent;
         GetComponentInParent<InventorySlot>().RemoveItem(_Item, InventorySlot.ItemOperation.Move);
         transform.SetParent( transform.root);
@@ -83,7 +84,7 @@ public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerE
     {
         Debug.Log("End");
         transform.SetParent( ParentAfterDrag);
-        GetComponentInParent<InventorySlot>().MoveItemToItems(_Item);
+        GetComponentInParent<InventorySlot>().MoveItem(_Item);
         _Item.Icon.GetComponent<Image>().raycastTarget = true;
         GetComponent<Button>().interactable = true;
     }

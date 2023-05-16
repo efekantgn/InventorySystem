@@ -5,16 +5,18 @@ using UnityEngine;
 
 public class DebugMonitor : MonoBehaviour
 {
+    public TextMeshProUGUI EquipedList;
     public TextMeshProUGUI PocketList;
     public TextMeshProUGUI BackpackList;
 
-    public Inventory Inventory;
+    public InventorySlot Equiped;
     public InventorySlot Pocket;
     public InventorySlot Backpack;
 
 
     private void Update()
     {
+        EquipedList.text = "";
         PocketList.text = "";
         BackpackList.text = "";
 
@@ -25,6 +27,10 @@ public class DebugMonitor : MonoBehaviour
         foreach (var item in Backpack.Items)
         {
             BackpackList.text += item.Name + "\n";
+        }
+        foreach (var item in Equiped.Items)
+        {
+            EquipedList.text += item.Name + "\n";
         }
     }
 }
