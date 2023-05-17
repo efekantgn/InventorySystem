@@ -1826,6 +1826,7 @@ GameObject:
   - component: {fileID: 647844542}
   - component: {fileID: 647844541}
   - component: {fileID: 647844543}
+  - component: {fileID: 647844544}
   m_Layer: 5
   m_Name: MainPanel
   m_TagString: Untagged
@@ -1907,11 +1908,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InventoryPanel: {fileID: 1427017893}
+  EquipedPanel: {fileID: 661806718}
+  PocketPanel: {fileID: 143995450}
+  BackpackPanel: {fileID: 1813023098}
   CraftPanel: {fileID: 1855037062}
   DropPanel: {fileID: 1163405006}
   EquipedInventorySlot: {fileID: 661806718}
   PocketInventorySlot: {fileID: 143995450}
   BackpackInventorySlot: {fileID: 1813023098}
+--- !u!114 &647844544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647844539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f88714655bf9514bbfbc1da85227a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _UIItemElement: {fileID: 3178117159210312049, guid: 6095471ecea8e8b40a06d0f0198bc5a7, type: 3}
 --- !u!1 &661806718
 GameObject:
   m_ObjectHideFlags: 0
@@ -7000,9 +7017,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Items:
-  - {fileID: 11400000, guid: 5ffd1befb33c61b4d9d2b486da575c7e, type: 2}
-  - {fileID: 11400000, guid: 268b457e408e8ac46be10fb3a550aabb, type: 2}
-  - {fileID: 11400000, guid: 156cd551427dbef45b42a5694fc59778, type: 2}
+  - {fileID: 11400000, guid: e9d3d9bbd35417642af72b62256cee9e, type: 2}
+  - {fileID: 11400000, guid: b45c7b0e48ea7f04eb36b28bade00a98, type: 2}
+  - {fileID: 11400000, guid: 8d25be9ab07472143a5c09217c02589e, type: 2}
+  - {fileID: 11400000, guid: ee27abb30aa4b074e95f3ff24085b383, type: 2}
+  - {fileID: 11400000, guid: c68e7d5ad77a1ab489f2532fc805217a, type: 2}
+  - {fileID: 11400000, guid: cc8eac4654a241d428f472b27565e60e, type: 2}
+  - {fileID: 11400000, guid: 7084aeccf369c1b4f8dd9a40a6f5bbc2, type: 2}
   Pocket: {fileID: 143995455}
   Backpack: {fileID: 1813023103}
   AddToBackpack: 1
