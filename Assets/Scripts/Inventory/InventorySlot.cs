@@ -33,37 +33,43 @@ public class InventorySlot : MonoBehaviour, IDropHandler
 
     public void RemoveItem(Item item,ItemOperation itemOperation) 
     {
-        RemoveItemFromInventory(item.ItemData);
+        RemoveItemFromInventory(item.itemData);
         RemoveItemFromItemsUI(item.gameObject, itemOperation);
 
     }
     public void MoveItem(Item item)
     {
-        bool hasInventory = HasItemsInInventory(item.ItemData);
 
-        if (item.ItemData.Stackable && hasInventory)
+        bool hasInventory = HasItemsInInventory(item.itemData);
+         
+
+
+        if (item.itemData.ItemStackable && hasInventory)
         {
-            int ind = GetIndexOfItemFromItemUI(item.gameObject);
-            Items[ind].Count = Items[ind].Count + item.ItemData.Count;
+            int ind = GetIndexOfItemFromItemUI(item.itemData);
+            Items[ind].ItemCount = Items[ind].ItemCount + item.itemData.ItemCount;
             UpdateAllItemsUI();
+            Destroy(item.gameObject);
         }
         else
         {
-            Items.Add(item.ItemData);
+            Items.Add(item.itemData);
             ItemsUI.Add(item.gameObject);
             UpdateAllItemsUI();
         }
     }
+
+   
 
     #region BackgroundListOperations
     public void AddItemToItems(ItemData itemData)
     {
         bool hasInventory = HasItemsInInventory(itemData);
 
-        if (itemData.Stackable && hasInventory)
+        if (itemData.ItemStackable && hasInventory)
         {
             int ind = GetIndexOfItemFromInventory(itemData);
-            Items[ind].Count = Items[ind].Count + itemData.Count;
+            Items[ind].ItemCount = Items[ind].ItemCount + itemData.ItemCount;
             UpdateIndexInItemsUI(ind);
         }
         else
@@ -129,12 +135,28 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     public ItemData ConvertToItemData(ItemSO itemSO)
     {
         ItemData data = new ItemData();
-        data.Name = itemSO.ItemName;
-        data.Icon = itemSO.ItemIcon;
-        data.Description = itemSO.ItemDescription;
-        data.Stackable = itemSO.ItemStackable;
-        data.Count = itemSO.ItemCount;
-        data.Type= itemSO.ItemType;
+        data.ItemName = itemSO.ItemName;
+        data.ItemIcon = itemSO.ItemIcon;
+        data.ItemDescription = itemSO.ItemDescription;
+        data.ItemStackable = itemSO.ItemStackable;
+        data.ItemCount = itemSO.ItemCount;
+        data.ItemType= itemSO.ItemType;
+
+        switch (itemSO.ItemType)
+        {
+            case ItemType.Equipment:
+                data.EquipmentId = itemSO.EquipmentId;
+                break;
+            case ItemType.Weapon:
+                data.WeaponId = itemSO.WeaponId;
+                break;
+            case ItemType.Consumable:
+                data.ConsumableId = itemSO.ConsumableId;
+                break;
+            default:
+                break;
+        }
+
         return data;
     }
 
@@ -142,7 +164,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     {
         foreach (ItemData item in Items) 
         {
-            if (item.Name == itemData.Name)
+            if (item.ItemName == itemData.ItemName)
             {
                 return true;
             }
@@ -154,7 +176,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     {
         for (int i = 0; i < Items.Count; i++)
         {
-            if (Items[i].Name == itemData.Name)
+            if (Items[i].ItemName == itemData.ItemName)
             {
                 return i;
             }
@@ -162,11 +184,11 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         return -1;
     }
 
-    public int GetIndexOfItemFromItemUI(GameObject UIItem)
+    public int GetIndexOfItemFromItemUI(ItemData UIItem)
     {
         for (int i = 0; i < ItemsUI.Count; i++)
         {
-            if (ItemsUI[i]== UIItem)
+            if (ItemsUI[i].GetComponent<Item>().itemData.ItemName== UIItem.ItemName)
             {
                 return i;
             }

@@ -464,11 +464,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf46006cb9e70f46844ff60fbd152b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Icon: {fileID: 3178117158155720577}
-  Name: {fileID: 3178117159797580450}
-  Count: {fileID: 3178117158885566829}
-  Description: {fileID: 3178117158671545621}
-  Inventory: {fileID: 0}
+  iconPanel: {fileID: 3178117158155720577}
+  namePanel: {fileID: 3178117159797580450}
+  countPanel: {fileID: 3178117158885566829}
+  descriptionPanel: {fileID: 3178117158671545621}
+  isEquiped: 0
+  oldInventorySlot: {fileID: 0}
 --- !u!114 &7846102246926831176
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -23,7 +23,7 @@ public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerE
     private void Start()
     {
         _Item = GetComponent<Item>();
-        _ItemData = _Item.ItemData;
+        _ItemData = _Item.itemData;
         _InfoPanelName = GameObject.Find("InfoPanelName").GetComponent<TextMeshProUGUI>();
         _InfoPanelDescription = GameObject.Find("InfoPanelDescription").GetComponent<TextMeshProUGUI>();
     }
@@ -41,8 +41,8 @@ public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerE
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _InfoPanelName.text = _ItemData.Name;
-        _InfoPanelDescription.text = _ItemData.Description;
+        _InfoPanelName.text = _ItemData.ItemName;
+        _InfoPanelDescription.text = _ItemData.ItemDescription;
     }
     public void OnPointerExit(PointerEventData eventData)
     {
@@ -65,12 +65,12 @@ public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerE
     {
         Debug.Log("Begin");
         GetComponent<Button>().interactable= false;
-        _Item.OldInventorySlot = transform.parent.gameObject;
+        _Item.oldInventorySlot = transform.parent.gameObject;
         ParentAfterDrag = transform.parent;
         GetComponentInParent<InventorySlot>().RemoveItem(_Item, InventorySlot.ItemOperation.Move);
         transform.SetParent( transform.root);
         transform.SetAsLastSibling();
-        _Item.Icon.GetComponent<Image>().raycastTarget = false;
+        _Item.iconPanel.GetComponent<Image>().raycastTarget = false;
 
     }
     public void OnDrag(PointerEventData eventData)
@@ -84,8 +84,16 @@ public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerE
     {
         Debug.Log("End");
         transform.SetParent( ParentAfterDrag);
+        if (_Item.IsParentEquippedSlot())
+        {
+            _Item.EquipItemWithDrag();
+        }
+        else
+        {
+            _Item.UnEquipItemWithDrag();
+        }
         GetComponentInParent<InventorySlot>().MoveItem(_Item);
-        _Item.Icon.GetComponent<Image>().raycastTarget = true;
+        _Item.iconPanel.GetComponent<Image>().raycastTarget = true;
         GetComponent<Button>().interactable = true;
     }
 

@@ -27,21 +27,21 @@ public class ItemSO :ScriptableObject
     #region Weapon Variables
 
     private  int _weaponId;
-    protected  int WeaponId { get => _weaponId; set => _weaponId = value; }
+    public virtual int WeaponId { get => _weaponId; set => _weaponId = value; }
 
     #endregion
 
     #region Equipment Variables
 
     private int _equipmentId;
-    public  int EquipmentId { get => _equipmentId; set => _equipmentId = value; }
+    public virtual int EquipmentId { get => _equipmentId; set => _equipmentId = value; }
 
     #endregion
 
     #region Consumable Variables
 
     private int _consumableId;
-    public  int ConsumableId { get => _consumableId; set => _consumableId = value; }
+    public virtual int ConsumableId { get => _consumableId; set => _consumableId = value; }
    
 
     #endregion

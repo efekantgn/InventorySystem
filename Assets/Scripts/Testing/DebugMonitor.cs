@@ -22,15 +22,15 @@ public class DebugMonitor : MonoBehaviour
 
         foreach (var item in Pocket.Items)
         {
-            PocketList.text += item.Name + "\n";
+            PocketList.text += item.ItemName + "\n";
         }
         foreach (var item in Backpack.Items)
         {
-            BackpackList.text += item.Name + "\n";
+            BackpackList.text += item.ItemName + "\n";
         }
         foreach (var item in Equiped.Items)
         {
-            EquipedList.text += item.Name + "\n";
+            EquipedList.text += item.ItemName + "\n";
         }
     }
 }
