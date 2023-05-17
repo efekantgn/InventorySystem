@@ -97,7 +97,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         GameObject go = Instantiate(UISlotElement);
         go.transform.SetParent(transform);
         go.GetComponent<Item>().SetItem(itemData);
-        go.GetComponent<Item>().SetUIElements();
+        go.GetComponent<Item>().UpdateUIElements();
         ItemsUI.Add(go);
     }
 
@@ -105,14 +105,14 @@ public class InventorySlot : MonoBehaviour, IDropHandler
 
     public void UpdateIndexInItemsUI(int ind)
     {
-        ItemsUI[ind].GetComponent<Item>().SetUIElements();
+        ItemsUI[ind].GetComponent<Item>().UpdateUIElements();
     }
 
     public void UpdateAllItemsUI()
     {
         foreach (GameObject items in ItemsUI) 
         {
-            items.GetComponent<Item>().SetUIElements();
+            items.GetComponent<Item>().UpdateUIElements();
         }
     }
 
@@ -142,20 +142,20 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         data.ItemCount = itemSO.ItemCount;
         data.ItemType= itemSO.ItemType;
 
-        switch (itemSO.ItemType)
-        {
-            case ItemType.Equipment:
-                data.EquipmentId = itemSO.EquipmentId;
-                break;
-            case ItemType.Weapon:
-                data.WeaponId = itemSO.WeaponId;
-                break;
-            case ItemType.Consumable:
-                data.ConsumableId = itemSO.ConsumableId;
-                break;
-            default:
-                break;
-        }
+        //switch (itemSO.ItemType)
+        //{
+        //    case ItemType.Equipment:
+        //        data.EquipmentId = itemSO.EquipmentId;
+        //        break;
+        //    case ItemType.Weapon:
+        //        data.WeaponId = itemSO.WeaponId;
+        //        break;
+        //    case ItemType.Consumable:
+        //        data.ConsumableId = itemSO.ConsumableId;
+        //        break;
+        //    default:
+        //        break;
+        //}
 
         return data;
     }

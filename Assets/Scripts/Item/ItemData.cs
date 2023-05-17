@@ -7,6 +7,7 @@ public class ItemData
 
     #region ItemData variables
 
+    private int _itemID;
     private string _itemName;
     private string _itemDescription;
     private bool _itemStackable;
@@ -14,6 +15,7 @@ public class ItemData
     private Sprite _itemIcon;
     private ItemType _itemType;
 
+    public int ItemID { get => _itemID; set => _itemID = value; }
     public string ItemName { get => _itemName; set => _itemName = value; }
     public string ItemDescription { get => _itemDescription; set => _itemDescription = value; }
     public bool ItemStackable { get => _itemStackable; set => _itemStackable = value; }
@@ -23,26 +25,6 @@ public class ItemData
 
     #endregion
 
-    #region Weapon Variables
 
-    private int _weaponId;
-    public virtual int WeaponId { get => _weaponId; set => _weaponId = value; }
-
-    #endregion
-
-    #region Equipment Variables
-
-    private int _equipmentId;
-    public virtual int EquipmentId { get => _equipmentId; set => _equipmentId = value; }
-
-    #endregion
-
-    #region Consumable Variables
-
-    private int _consumableId;
-    public virtual int ConsumableId { get => _consumableId; set => _consumableId = value; }
-
-
-    #endregion
 
 }

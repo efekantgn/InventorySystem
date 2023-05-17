@@ -4,9 +4,18 @@ using UnityEngine;
 
 public class MainPanel : MonoBehaviour
 {
+    [Header("Inventory Panels")]
     public GameObject InventoryPanel;
+    public GameObject EquipedPanel;
+    public GameObject PocketPanel;
+    public GameObject BackpackPanel;
+
+    [Header("Craft Panels")]
     public GameObject CraftPanel;
+
+    [Header("Other Panels")]
     public GameObject DropPanel;
+
 
     public GameObject EquipedInventorySlot;
     public GameObject PocketInventorySlot;

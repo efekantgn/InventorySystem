@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Item : MonoBehaviour
 {
-    public ItemData itemData;
+    public ItemData itemData=new ItemData();
 
     public GameObject iconPanel;
     public GameObject namePanel;
@@ -26,6 +26,7 @@ public class Item : MonoBehaviour
     #region UnityCallBacks
     private void Start()
     {
+
         _equipedSlot = MainPanel.Instance.EquipedInventorySlot;
         _pocketSlot = MainPanel.Instance.PocketInventorySlot;
         _backpackSlot = MainPanel.Instance.BackpackInventorySlot;
@@ -88,7 +89,7 @@ public class Item : MonoBehaviour
     {
         this.itemData= itemData;
     }
-    public void SetUIElements()
+    public void UpdateUIElements()
     {
         iconPanel.GetComponent<Image>().sprite=itemData.ItemIcon;
         namePanel.GetComponent<TextMeshProUGUI>().text = itemData.ItemName;
