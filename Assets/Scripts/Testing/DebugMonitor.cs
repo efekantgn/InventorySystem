@@ -13,24 +13,34 @@ public class DebugMonitor : MonoBehaviour
     public InventorySlot Pocket;
     public InventorySlot Backpack;
 
+    [SerializeField] private TextMeshProUGUI _inventoryText;
+    [SerializeField] private Inventory _inventory;
+    public TextMeshProUGUI InventoryText { get => _inventoryText; set => _inventoryText = value; }
+    public Inventory Inventory { get => _inventory; set => _inventory = value; }
+
 
     private void Update()
     {
         EquipedList.text = "";
         PocketList.text = "";
         BackpackList.text = "";
+        InventoryText.text = "";
 
-        foreach (var item in Pocket.Items)
+        //foreach (var item in Pocket.Items)
+        //{
+        //    PocketList.text += item.ItemName + "\n";
+        //}
+        //foreach (var item in Backpack.Items)
+        //{
+        //    BackpackList.text += item.ItemName + "\n";
+        //}
+        //foreach (var item in Equiped.Items)
+        //{
+        //    EquipedList.text += item.ItemName + "\n";
+        //}
+        foreach (var item in Inventory.Items)
         {
-            PocketList.text += item.ItemName + "\n";
-        }
-        foreach (var item in Backpack.Items)
-        {
-            BackpackList.text += item.ItemName + "\n";
-        }
-        foreach (var item in Equiped.Items)
-        {
-            EquipedList.text += item.ItemName + "\n";
+            InventoryText.text += item.itemData.ItemName + "\n";
         }
     }
 }

@@ -19,7 +19,7 @@ public class DropController : MonoBehaviour
         CountText.text=(int)Slider.value+"";
     }
 
-    public void OnClickConfirmButton() 
+    public void OnClickConfirmButton()
     {
         Item.DropItem((int)Slider.value);
         MainPanel.Instance.DropPanel.SetActive(false);

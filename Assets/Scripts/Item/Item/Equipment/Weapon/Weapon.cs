@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class WeaponSO : EquipmentSO
+public class Weapon : Equipment
 {
     private int _damage;
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AddItem : MonoBehaviour
@@ -11,31 +12,49 @@ public class AddItem : MonoBehaviour
 
     public bool AddToBackpack=true;
 
-    private Inventory _inventory;
-
-    public Inventory Inventory { get => _inventory; set => _inventory = value; }
-
-    private void Start()
-    {
-        Inventory=FindObjectOfType<Inventory>();
-    }
+    
 
     public void AddRandomItem()
     {
-
-        int random = Random.Range(0, Items.Length);
-        ItemData temp = DataConverter.ConvertItemSOToItemData(Items[random]);
-        Inventory.InstantiateUIElement(temp,MainPanel.Instance.BackpackPanel.transform);
-        //if (AddToBackpack)
-        //{
-            
-
-        //    Backpack.AddItem(Items[Random.Range(0, Items.Length)]);
-        //}
-        //else
-        //{
-        //    Pocket.AddItem(Items[Random.Range(0, Items.Length)]);
-        //}
+        int random = 5/*Random.Range(0, Items.Length)*/;
+        if (Items[random].GetType() == typeof(BodySO))
+        {
+            BodyData temp = DataConverter.ConvertItemSOToItemData(Items[random].ConvertTo<BodySO>());
+            Inventory.Instance.AddItem(temp, MainPanel.Instance.BackpackPanel.transform);
+        }
+        else if (Items[random].GetType() == typeof(HeadSO))
+        {
+            HeadData temp = DataConverter.ConvertItemSOToItemData(Items[random].ConvertTo<HeadSO>());
+            Inventory.Instance.AddItem(temp, MainPanel.Instance.BackpackPanel.transform);
+        }
+        else  if (Items[random].GetType() == typeof(FootSO))
+        {
+            FootData temp = DataConverter.ConvertItemSOToItemData(Items[random].ConvertTo<FootSO>());
+            Inventory.Instance.AddItem(temp, MainPanel.Instance.BackpackPanel.transform);
+        }
+        else if (Items[random].GetType() == typeof(ConsumableSO))
+        {
+            ConsumableData temp = DataConverter.ConvertItemSOToItemData(Items[random].ConvertTo<ConsumableSO>());
+            Inventory.Instance.AddItem(temp, MainPanel.Instance.BackpackPanel.transform);
+        }
+        else if (Items[random].GetType() == typeof(OneHandedSO))
+        {
+            OneHandedData temp = DataConverter.ConvertItemSOToItemData(Items[random].ConvertTo<OneHandedSO>());
+            Inventory.Instance.AddItem(temp, MainPanel.Instance.BackpackPanel.transform);
+        }
+        else if (Items[random].GetType() == typeof(TwoHandedSO))
+        {
+            TwoHandedData temp = DataConverter.ConvertItemSOToItemData(Items[random].ConvertTo<TwoHandedSO>());
+            Inventory.Instance.AddItem(temp, MainPanel.Instance.BackpackPanel.transform);
+        }
+        else if (Items[random].GetType() == typeof(OffHandSO))
+        {
+            OffHandData temp = DataConverter.ConvertItemSOToItemData(Items[random].ConvertTo<OffHandSO>());
+            Inventory.Instance.AddItem(temp, MainPanel.Instance.BackpackPanel.transform);
+        }
+        
+        
+       
     }
 
     
