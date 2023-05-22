@@ -4,8 +4,23 @@ using UnityEngine;
 
 public class OneHanded : Weapon
 {
-    private OneHandedData itemData=new OneHandedData();
-    public OneHandedData OneHandedData { get => itemData; set => itemData = value; }
 
-    
+    public override void UseItem()
+    {
+        base.UseItem();
+        if (!IsEquipped)
+        {
+            Inventory.Instance.CurrentOneHanded = this;
+            IsEquipped = true;
+        }
+        else
+        {
+            Inventory.Instance.CurrentOneHanded = null;
+            IsEquipped = false;
+        }
+
+    }
+
+
+
 }

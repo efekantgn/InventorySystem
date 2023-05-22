@@ -8,24 +8,31 @@ using static UnityEngine.EventSystems.PointerEventData;
 
 public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,IPointerExitHandler/*,IBeginDragHandler,IDragHandler,IEndDragHandler*/
 {
-    public GameObject GeneralPanel;
-    public GameObject UsagePanel;
-    
-    private TextMeshProUGUI _InfoPanelName;
-    private TextMeshProUGUI _InfoPanelDescription;
-    private ItemData _ItemData;
-    private Item _Item;
-    [HideInInspector]public Transform ParentAfterDrag;
+    private GameObject _generalPanel;
+    private GameObject _usagePanel;
+
+    private TextMeshProUGUI _infoPanelName;
+    private TextMeshProUGUI _infoPanelDescription;
+    private Item _item;
+    [HideInInspector] private Transform _parentAfterDrag;
+
+    public GameObject GeneralPanel { get => _generalPanel; set => _generalPanel = value; }
+    public GameObject UsagePanel { get => _usagePanel; set => _usagePanel = value; }
+    public TextMeshProUGUI InfoPanelName { get => _infoPanelName; set => _infoPanelName = value; }
+    public TextMeshProUGUI InfoPanelDescription { get => _infoPanelDescription; set => _infoPanelDescription = value; }
+    public Item Item { get => _item; set => _item = value; }
+    public Transform ParentAfterDrag { get => _parentAfterDrag; set => _parentAfterDrag = value; }
 
 
 
     #region UnityCallbacks
     private void Start()
     {
-        _Item = GetComponent<Item>();
-        _ItemData = _Item.itemData;
-        _InfoPanelName = GameObject.Find("InfoPanelName").GetComponent<TextMeshProUGUI>();
-        _InfoPanelDescription = GameObject.Find("InfoPanelDescription").GetComponent<TextMeshProUGUI>();
+        Item = GetComponent<Item>();
+        GeneralPanel = Item.GeneralPanel;
+        UsagePanel = Item.UsagePanel;
+        InfoPanelName = GameObject.Find("InfoPanelName").GetComponent<TextMeshProUGUI>();
+        InfoPanelDescription = GameObject.Find("InfoPanelDescription").GetComponent<TextMeshProUGUI>();
     }
     #endregion
 
@@ -34,20 +41,20 @@ public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerE
     {
         if (eventData.button == InputButton.Right)
         {
-            _Item.SwitchGeneralUsagePanel();
+            Item.SwitchGeneralUsagePanel();
 
         }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _InfoPanelName.text = _ItemData.ItemName;
-        _InfoPanelDescription.text = _ItemData.ItemDescription;
+        InfoPanelName.text = Item.ItemName;
+        InfoPanelDescription.text = Item.ItemDescription;
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        _InfoPanelName.text = "";
-        _InfoPanelDescription.text = "";
+        InfoPanelName.text = "";
+        InfoPanelDescription.text = "";
     }
 
     #endregion

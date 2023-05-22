@@ -6,9 +6,23 @@ using UnityEngine.UI;
 
 public class Item : MonoBehaviour
 {
-    
+    #region ItemSO variables
 
-    public ItemData itemData=new ItemData();
+    [SerializeField] private int _itemID;
+    [SerializeField] private string _itemName;
+    [SerializeField] private string _itemDescription;
+    [SerializeField] private bool _itemStackable;
+    [SerializeField] private int _itemCount = 1;
+    [SerializeField] private Sprite _itemIcon;
+
+    public string ItemName { get => _itemName; set => _itemName = value; }
+    public string ItemDescription { get => _itemDescription; set => _itemDescription = value; }
+    public bool ItemStackable { get => _itemStackable; set => _itemStackable = value; }
+    public int ItemCount { get => _itemCount; set => _itemCount = value; }
+    public Sprite ItemIcon { get => _itemIcon; set => _itemIcon = value; }
+    public int ItemID { get => _itemID; set => _itemID = value; }
+
+    #endregion
 
     [SerializeField] private GameObject _iconPanel;
     [SerializeField] private GameObject _countPanel;
@@ -27,9 +41,9 @@ public class Item : MonoBehaviour
     #region UnityCallBacks
     private void Start()
     {
-        if (!itemData.ItemStackable)
+        if (!ItemStackable)
         {
-            itemData.ItemCount = 1;
+            ItemCount = 1;
             CountPanel.SetActive(false);
         }
     }
@@ -40,8 +54,6 @@ public class Item : MonoBehaviour
     public void OnClickItemButton()
     {
         UseItem();
-        
-
     }
     public void OnClickUseButton()
     {
@@ -51,10 +63,10 @@ public class Item : MonoBehaviour
 
     public void OnClickDropButton()
     {
-        if (itemData.ItemCount <= 1)
+        if (ItemCount <= 1)
         {
-            
-            DropItem(itemData.ItemCount);
+
+            DropItem(ItemCount);
         }
         else
         {
@@ -72,34 +84,35 @@ public class Item : MonoBehaviour
     #region ScriptFunctions
     public virtual void UseItem()
     {
-        Debug.Log("qw");
         //Look Child Classes
     }
     public void DropItem(int count)
     {
         DecreaseItemCount(count);
-        if (itemData.ItemCount<=0)
+        if (ItemCount <= 0)
         {
             Inventory.Instance.RemoveItem(this);
         }
-        
+
     }
 
+    
     public void IncreaseItemCount(int count)
     {
-        itemData.ItemCount += count;
+        ItemCount += count;
         UpdateUIElements();
     }
     public void DecreaseItemCount(int count)
     {
-        itemData.ItemCount -= count;
+        ItemCount -= count;
         UpdateUIElements();
     }
 
+    
     public void UpdateUIElements()
     {
-        IconPanel.GetComponent<Image>().sprite=itemData.ItemIcon;
-        CountPanel.GetComponent<TextMeshProUGUI>().text = itemData.ItemCount +"";
+        IconPanel.GetComponent<Image>().sprite = ItemIcon;
+        CountPanel.GetComponent<TextMeshProUGUI>().text = ItemCount + "";
     }
 
 
@@ -112,13 +125,13 @@ public class Item : MonoBehaviour
     {
         GameObject dropPanel = MainPanel.Instance.DropPanel;
         dropPanel.SetActive(true);
-        DropController dropController= dropPanel.GetComponent<DropController>();
+        DropController dropController = dropPanel.GetComponent<DropController>();
         dropController.Item = this;
-        dropController.CountText.text = itemData.ItemCount.ToString();
-        dropController.Slider.maxValue = itemData.ItemCount;
-        dropController.Slider.value = itemData.ItemCount;
-        dropController.NameText.text = itemData.ItemName;
-    }
+        dropController.CountText.text = ItemCount.ToString();
+        dropController.Slider.maxValue = ItemCount;
+        dropController.Slider.value = ItemCount;
+        dropController.NameText.text = ItemName;
+    }   
 
     #endregion
 

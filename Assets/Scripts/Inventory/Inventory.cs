@@ -6,12 +6,22 @@ public class Inventory : MonoBehaviour
 {
     #region Variables
     [SerializeField] private List<Item> _items = new List<Item>();
-    [SerializeField] private List<Item> _equipedItems = new List<Item>();
-    [SerializeField] private GameObject _UIItemElement;
+
+    [SerializeField] private Body _currentBody;
+    [SerializeField] private Head _currentHead;
+    [SerializeField] private Foot _currentFoot;
+    [SerializeField] private OneHanded _currentOneHanded;
+    [SerializeField] private OffHand _currentOffHand;
+    [SerializeField] private TwoHanded _currentTwoHand;
+
 
     public List<Item> Items { get => _items; set => _items = value; }
-    public GameObject UIItemElement { get => _UIItemElement; set => _UIItemElement = value; }
-    public List<Item> EquipedItems { get => _equipedItems; set => _equipedItems = value; }
+    public Body CurrentBody { get => _currentBody; set => _currentBody = value; }
+    public Head CurrentHead { get => _currentHead; set => _currentHead = value; }
+    public Foot CurrentFoot { get => _currentFoot; set => _currentFoot = value; }
+    public OneHanded CurrentOneHanded { get => _currentOneHanded; set => _currentOneHanded = value; }
+    public OffHand CurrentOffHand { get => _currentOffHand; set => _currentOffHand = value; }
+    public TwoHanded CurrentTwoHand { get => _currentTwoHand; set => _currentTwoHand = value; }
 
     #endregion
 
@@ -34,147 +44,45 @@ public class Inventory : MonoBehaviour
     #endregion
 
 
-    #region AddItemWithTheirData
-    public void AddItem(HeadData itemData,Transform parent) 
+    public void AddItem(GameObject item,Transform parent)
     {
-        if (InventoryHasItem(itemData) && itemData.ItemStackable)
+        Item tmp = item.GetComponent<Item>();
+
+        Item FindedItem = FindItemInInventory(tmp);
+
+        if (FindedItem!=null && tmp.ItemStackable)
         {
-            FindItemInInventory(itemData).IncreaseItemCount(itemData.ItemCount);
+            FindedItem.IncreaseItemCount(tmp.ItemCount);
         }
         else
         {
-            InstantiateUIElement(itemData, parent);
-            
+            InstantiateUIElement(item, parent);
+
         }
+        
     }
 
-    public void AddItem(BodyData itemData, Transform parent)
-    {
-        if (InventoryHasItem(itemData) && itemData.ItemStackable)
-        {
-            FindItemInInventory(itemData).IncreaseItemCount(itemData.ItemCount);
-        }
-        else
-        {
-            InstantiateUIElement(itemData, parent);
-        }
-    }
-
-    public void AddItem(FootData itemData, Transform parent)
-    {
-        if (InventoryHasItem(itemData) && itemData.ItemStackable)
-        {
-            FindItemInInventory(itemData).IncreaseItemCount(itemData.ItemCount);
-        }
-        else
-        {
-            InstantiateUIElement(itemData, parent);
-        }
-    }
-
-    public void AddItem(ConsumableData itemData, Transform parent)
-    {
-        if (InventoryHasItem(itemData) && itemData.ItemStackable)
-        {
-            FindItemInInventory(itemData).IncreaseItemCount(itemData.ItemCount);
-        }
-        else
-        {
-            InstantiateUIElement(itemData, parent);
-        }
-    }
-
-    public void AddItem(OneHandedData itemData, Transform parent)
-    {
-        if (InventoryHasItem(itemData) && itemData.ItemStackable)
-        {
-            FindItemInInventory(itemData).IncreaseItemCount(itemData.ItemCount);
-        }
-        else
-        {
-            InstantiateUIElement(itemData, parent);
-        }
-    }
-
-    public void AddItem(TwoHandedData itemData, Transform parent)
-    {
-        if (InventoryHasItem(itemData) && itemData.ItemStackable)
-        {
-            FindItemInInventory(itemData).IncreaseItemCount(itemData.ItemCount);
-        }
-        else
-        {
-            InstantiateUIElement(itemData, parent);
-        }
-    }
-
-    public void AddItem(OffHandData itemData, Transform parent)
-    {
-        if (InventoryHasItem(itemData) && itemData.ItemStackable)
-        {
-            FindItemInInventory(itemData).IncreaseItemCount(itemData.ItemCount);
-        }
-        else
-        {
-            InstantiateUIElement(itemData, parent);
-        }
-    }
-
-    #endregion
-
-    public void AddItem(Item item)
-    {
-        Items.Add(item);
-    }
-
-
-
-    [ContextMenu("remove")]
-    public void RemoveFirstItem()
-    {
-        Destroy(Items[0].gameObject);
-        Items.Remove(Items[0]);
-    }
     public void RemoveItem(Item item)
     {
         Destroy(item.gameObject);
         Items.Remove(item);
     }
     
-
-    public void InstantiateUIElement(ItemData itemData,Transform parent)
+    public virtual void InstantiateUIElement(GameObject item, Transform parent)
     {
-        GameObject UIGameObject = Instantiate(_UIItemElement, parent);
-        Item tmp = UIGameObject.GetComponent<Item>();
-        tmp.itemData.ItemID = itemData.ItemID;
-        tmp.itemData.ItemName = itemData.ItemName;
-        tmp.itemData.ItemDescription = itemData.ItemDescription;
-        tmp.itemData.ItemStackable = itemData.ItemStackable;
-        tmp.itemData.ItemCount = itemData.ItemCount;
-        tmp.itemData.ItemIcon = itemData.ItemIcon;
-        tmp.UpdateUIElements();
-        AddItem(tmp);
+        GameObject tmp=Instantiate(item, parent);
+        tmp.GetComponent<Item>().UpdateUIElements();
+        Items.Add(tmp.GetComponent<Item>());
     }
-
 
     #region ItemsListDataChecks
-    public bool InventoryHasItem(ItemData itemData)
-    {
-        foreach (var item in Items)
-        {
-            if(item.itemData.ItemID==itemData.ItemID)
-                return true;
-        }
-
-        return false;
-    }
-
-    public Item FindItemInInventory(ItemData itemData)
+    
+    public Item FindItemInInventory(Item itemData)
     {
 
         foreach (var item in Items)
         {
-            if (item.itemData.ItemID == itemData.ItemID)
+            if (item.ItemID == itemData.ItemID)
                 return item;
         }
         return null;
@@ -182,18 +90,93 @@ public class Inventory : MonoBehaviour
     }
     #endregion
 
-    #region EquipedItemsOperations
+    
 
-    public void AddToEquipedList(Item item)
-    {
-        EquipedItems.Add(item);
-    }
+    #region AddItemWithTheirData
+    //public void AddItem(HeadData itemData,Transform parent) 
+    //{
+    //    if (InventoryHasItem(itemData) && itemData.ItemStackable)
+    //    {
+    //        FindItemInInventory(itemData).IncreaseItemCount(itemData.ItemCount);
+    //    }
+    //    else
+    //    {
+    //        InstantiateUIElement(itemData, parent);
 
-    public void RemoveFromEquipedList(Item item)
-    {
-        EquipedItems.Remove(item);
-    }
+    //    }
+    //}
 
+    //public void AddItem(BodyData itemData, Transform parent)
+    //{
+    //    if (InventoryHasItem(itemData) && itemData.ItemStackable)
+    //    {
+    //        FindItemInInventory(itemData).IncreaseItemCount(itemData.ItemCount);
+    //    }
+    //    else
+    //    {
+    //        InstantiateUIElement(itemData, parent);
+    //    }
+    //}
+
+    //public void AddItem(FootData itemData, Transform parent)
+    //{
+    //    if (InventoryHasItem(itemData) && itemData.ItemStackable)
+    //    {
+    //        FindItemInInventory(itemData).IncreaseItemCount(itemData.ItemCount);
+    //    }
+    //    else
+    //    {
+    //        InstantiateUIElement(itemData, parent);
+    //    }
+    //}
+
+    //public void AddItem(ConsumableData itemData, Transform parent)
+    //{
+    //    if (InventoryHasItem(itemData) && itemData.ItemStackable)
+    //    {
+    //        FindItemInInventory(itemData).IncreaseItemCount(itemData.ItemCount);
+    //    }
+    //    else
+    //    {
+    //        InstantiateUIElement(itemData, parent);
+    //    }
+    //}
+
+    //public void AddItem(OneHandedData itemData, Transform parent)
+    //{
+    //    if (InventoryHasItem(itemData) && itemData.ItemStackable)
+    //    {
+    //        FindItemInInventory(itemData).IncreaseItemCount(itemData.ItemCount);
+    //    }
+    //    else
+    //    {
+    //        InstantiateUIElement(itemData, parent);
+    //    }
+    //}
+
+    //public void AddItem(TwoHandedData itemData, Transform parent)
+    //{
+    //    if (InventoryHasItem(itemData) && itemData.ItemStackable)
+    //    {
+    //        FindItemInInventory(itemData).IncreaseItemCount(itemData.ItemCount);
+    //    }
+    //    else
+    //    {
+    //        InstantiateUIElement(itemData, parent);
+    //    }
+    //}
+
+    //public void AddItem(OffHandData itemData, Transform parent)
+    //{
+    //    if (InventoryHasItem(itemData) && itemData.ItemStackable)
+    //    {
+    //        FindItemInInventory(itemData).IncreaseItemCount(itemData.ItemCount);
+    //    }
+    //    else
+    //    {
+    //        InstantiateUIElement(itemData, parent);
+    //    }
+    //}
 
     #endregion
 }

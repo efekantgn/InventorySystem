@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 0010e352a9b1abc4ebab3f3235c95e0b, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -277,7 +277,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 999
+  m_text: 4
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -357,10 +357,10 @@ GameObject:
   - component: {fileID: 3178117159210312048}
   - component: {fileID: 3178117159210312053}
   - component: {fileID: 3178117159210312051}
-  - component: {fileID: 8539735908372938304}
   - component: {fileID: 7846102246926831176}
+  - component: {fileID: 92176939236974588}
   m_Layer: 5
-  m_Name: Item
+  m_Name: IronChestPlate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -440,7 +440,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8539735908372938304}
+      - m_Target: {fileID: 92176939236974588}
         m_TargetAssemblyTypeName: Item, Assembly-CSharp
         m_MethodName: OnClickItemButton
         m_Mode: 1
@@ -452,22 +452,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8539735908372938304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3178117159210312049}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaf46006cb9e70f46844ff60fbd152b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _iconPanel: {fileID: 3178117158155720577}
-  _countPanel: {fileID: 3178117158885566829}
-  _generalPanel: {fileID: 5655508336273248182}
-  _usagePanel: {fileID: 8040462850799348808}
 --- !u!114 &7846102246926831176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,9 +464,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68451ef6d07ae9e488644ee9aded0e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GeneralPanel: {fileID: 5655508336273248182}
-  UsagePanel: {fileID: 8040462850799348808}
-  ParentAfterDrag: {fileID: 0}
+--- !u!114 &92176939236974588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3178117159210312049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a51e9a93f0426346ab91234f6870526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemID: 100
+  _itemName: Iron Chestplate
+  _itemDescription: +10 armor
+  _itemStackable: 0
+  _itemCount: 1
+  _itemIcon: {fileID: 21300000, guid: 0010e352a9b1abc4ebab3f3235c95e0b, type: 3}
+  _iconPanel: {fileID: 3178117158155720577}
+  _countPanel: {fileID: 3178117158885566829}
+  _generalPanel: {fileID: 5655508336273248182}
+  _usagePanel: {fileID: 8040462850799348808}
+  _isEquipped: 0
+  _armorResistance: 10
 --- !u!1 &3178117159797580450
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,7 +745,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8539735908372938304}
+      - m_Target: {fileID: 92176939236974588}
         m_TargetAssemblyTypeName: Item, Assembly-CSharp
         m_MethodName: OnClickUseButton
         m_Mode: 1
@@ -1089,7 +1094,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8539735908372938304}
+      - m_Target: {fileID: 92176939236974588}
         m_TargetAssemblyTypeName: Item, Assembly-CSharp
         m_MethodName: OnClickCloseButton
         m_Mode: 1
@@ -1223,7 +1228,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8539735908372938304}
+      - m_Target: {fileID: 92176939236974588}
         m_TargetAssemblyTypeName: Item, Assembly-CSharp
         m_MethodName: OnClickDropButton
         m_Mode: 1
