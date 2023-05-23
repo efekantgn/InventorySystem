@@ -8,17 +8,50 @@ public class Equipment : Item
 
     public bool IsEquipped { get => _isEquipped; set => _isEquipped = value; }
 
-    public override void UseItem()
+
+    
+
+
+    public virtual void EquipItem(Transform parent)
     {
-        if (!IsEquipped)
+        OldInventoryPanel = transform.parent;
+        IsEquipped= true;
+        transform.SetParent(parent);
+    }
+    public virtual void UnEquipItem(Transform parent)
+    {
+        IsEquipped= false;
+        transform.SetParent(parent);
+        OldInventoryPanel = null;
+    }
+
+    public override void MoveItem(Transform targetParent)
+    {
+        if (_isEquipped)
         {
-            Debug.Log("equip");
-            transform.SetParent(MainPanel.Instance.EquipedPanel.transform);
+            UnEquipItem(targetParent);
         }
         else
         {
-            Debug.Log("unequip");
-            transform.SetParent(MainPanel.Instance.BackpackPanel.transform);
+            OldInventoryPanel = transform.parent;
+            transform.SetParent(targetParent);
+
         }
     }
+
+    public override void MoveBetweenBackpackAndPocket()
+    {
+        if (_isEquipped)
+        {
+            MoveItem(OldInventoryPanel);
+        }
+        else
+        {
+            base.MoveBetweenBackpackAndPocket();
+        }
+    }
+
+
+
+
 }

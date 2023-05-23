@@ -17,10 +17,6 @@ public class MainPanel : MonoBehaviour
     public GameObject DropPanel;
 
 
-    public GameObject EquipedInventorySlot;
-    public GameObject PocketInventorySlot;
-    public GameObject BackpackInventorySlot;
-
     public static MainPanel Instance;
 
     private void Awake()

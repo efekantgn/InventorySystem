@@ -7,20 +7,33 @@ public class OneHanded : Weapon
 
     public override void UseItem()
     {
-        base.UseItem();
-        if (!IsEquipped)
+        
+        if (!IsEquipped && Inventory.Instance.CurrentOneHanded == null)
         {
-            Inventory.Instance.CurrentOneHanded = this;
-            IsEquipped = true;
+            EquipItem(MainPanel.Instance.EquipedPanel.transform);
         }
-        else
+        else if(IsEquipped && Inventory.Instance.CurrentOneHanded == this)
         {
-            Inventory.Instance.CurrentOneHanded = null;
-            IsEquipped = false;
+            UnEquipItem(OldInventoryPanel);
+        }
+        else if (!IsEquipped && Inventory.Instance.CurrentOneHanded != this)
+        {
+            transform.parent = OldInventoryPanel;
+            Debug.Log("aa");
         }
 
     }
 
+    public override void EquipItem(Transform parent)
+    {
+        base.EquipItem(parent);
+        Inventory.Instance.CurrentOneHanded = this;
+    }
 
+    public override void UnEquipItem(Transform parent)
+    {
+        base.UnEquipItem(parent);
+        Inventory.Instance.CurrentOneHanded = null;
+    }
 
 }

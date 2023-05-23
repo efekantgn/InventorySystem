@@ -28,12 +28,13 @@ public class Item : MonoBehaviour
     [SerializeField] private GameObject _countPanel;
     [SerializeField] private GameObject _generalPanel;
     [SerializeField] private GameObject _usagePanel;
+    [SerializeField] private Transform _oldInventoryPanel;
 
     public GameObject IconPanel { get => _iconPanel; set => _iconPanel = value; }
     public GameObject CountPanel { get => _countPanel; set => _countPanel = value; }
     public GameObject GeneralPanel { get => _generalPanel; set => _generalPanel = value; }
     public GameObject UsagePanel { get => _usagePanel; set => _usagePanel = value; }
-
+    public Transform OldInventoryPanel { get => _oldInventoryPanel; set => _oldInventoryPanel = value; }
 
 
 
@@ -59,6 +60,12 @@ public class Item : MonoBehaviour
     {
         UseItem();
         SwitchGeneralUsagePanel();
+    }
+    public void OnClickMoveButton()
+    {
+        MoveBetweenBackpackAndPocket();
+        SwitchGeneralUsagePanel();
+
     }
 
     public void OnClickDropButton()
@@ -86,6 +93,25 @@ public class Item : MonoBehaviour
     {
         //Look Child Classes
     }
+
+    public virtual void MoveItem(Transform targetParent)
+    {
+        
+    }
+
+    public virtual void MoveBetweenBackpackAndPocket()
+    {
+        
+        if (transform.parent.gameObject == MainPanel.Instance.BackpackPanel)
+        {
+            MoveItem(MainPanel.Instance.PocketPanel.transform);
+        }
+        else
+        {
+            MoveItem(MainPanel.Instance.BackpackPanel.transform);
+        }
+    }
+
     public void DropItem(int count)
     {
         DecreaseItemCount(count);
@@ -125,12 +151,12 @@ public class Item : MonoBehaviour
     {
         GameObject dropPanel = MainPanel.Instance.DropPanel;
         dropPanel.SetActive(true);
-        DropController dropController = dropPanel.GetComponent<DropController>();
-        dropController.Item = this;
-        dropController.CountText.text = ItemCount.ToString();
-        dropController.Slider.maxValue = ItemCount;
-        dropController.Slider.value = ItemCount;
-        dropController.NameText.text = ItemName;
+        ActionController ActionController = dropPanel.GetComponent<ActionController>();
+        ActionController.Item = this;
+        ActionController.CountText.text = ItemCount.ToString();
+        ActionController.Slider.maxValue = ItemCount;
+        ActionController.Slider.value = ItemCount;
+        ActionController.NameText.text = ItemName;
     }   
 
     #endregion

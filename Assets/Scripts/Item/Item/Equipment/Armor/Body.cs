@@ -7,17 +7,30 @@ public class Body : Armor
 
     public override void UseItem()
     {
-        base.UseItem();
-        if (!IsEquipped)
+        
+        if (!IsEquipped && Inventory.Instance.CurrentBody==null)
         {
-            Inventory.Instance.CurrentBody= this;
-            IsEquipped = true;
+            EquipItem(MainPanel.Instance.EquipedPanel.transform);
         }
-        else
+        else if(IsEquipped && Inventory.Instance.CurrentBody == this)
         {
-            Inventory.Instance.CurrentBody = null;
-            IsEquipped = false;
+            UnEquipItem(OldInventoryPanel);
         }
+        else if (!IsEquipped && Inventory.Instance.CurrentBody != this)
+        {
+            transform.SetParent(OldInventoryPanel);
+        }
+    }
 
+    public override void EquipItem(Transform parent)
+    {
+        base.EquipItem(parent);
+        Inventory.Instance.CurrentBody = this;
+    }
+
+    public override void UnEquipItem(Transform parent)
+    {
+        base.UnEquipItem(parent);
+        Inventory.Instance.CurrentBody = null;
     }
 }

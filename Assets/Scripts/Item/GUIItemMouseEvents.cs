@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using TMPro;
 using static UnityEngine.EventSystems.PointerEventData;
 
-public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,IPointerExitHandler/*,IBeginDragHandler,IDragHandler,IEndDragHandler*/
+public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     private GameObject _generalPanel;
     private GameObject _usagePanel;
@@ -15,6 +15,7 @@ public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerE
     private TextMeshProUGUI _infoPanelDescription;
     private Item _item;
     [HideInInspector] private Transform _parentAfterDrag;
+    [HideInInspector] private Transform _parentBeforeDrag;
 
     public GameObject GeneralPanel { get => _generalPanel; set => _generalPanel = value; }
     public GameObject UsagePanel { get => _usagePanel; set => _usagePanel = value; }
@@ -22,6 +23,7 @@ public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerE
     public TextMeshProUGUI InfoPanelDescription { get => _infoPanelDescription; set => _infoPanelDescription = value; }
     public Item Item { get => _item; set => _item = value; }
     public Transform ParentAfterDrag { get => _parentAfterDrag; set => _parentAfterDrag = value; }
+    public Transform ParentBeforeDrag { get => _parentBeforeDrag; set => _parentBeforeDrag = value; }
 
 
 
@@ -60,42 +62,30 @@ public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerE
     #endregion
 
 
-    //#region DragInterfaceCallbacks
-    //public void OnBeginDrag(PointerEventData eventData)
-    //{
-    //    Debug.Log("Begin");
-    //    GetComponent<Button>().interactable= false;
-    //    _Item.oldInventorySlot = transform.parent.gameObject;
-    //    ParentAfterDrag = transform.parent;
-    //    GetComponentInParent<InventorySlot>().RemoveItem(_Item, InventorySlot.ItemOperation.Move);
-    //    transform.SetParent( transform.root);
-    //    transform.SetAsLastSibling();
-    //    _Item.iconPanel.GetComponent<Image>().raycastTarget = false;
+    #region DragInterfaceCallbacks
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        Debug.Log("Begin");
+        GetComponent<Button>().interactable = false;
+        Item.IconPanel.GetComponent<Image>().raycastTarget = false;
+        ParentBeforeDrag = transform.parent;
+        transform.SetParent(transform.root);
+        transform.SetAsLastSibling();
 
-    //}
-    //public void OnDrag(PointerEventData eventData)
-    //{
-    //    Debug.Log("OnDrag");
-    //    transform.position= Input.mousePosition;
+    }
+    public void OnDrag(PointerEventData eventData)
+    {
+        Debug.Log("OnDrag");
+        transform.position = Input.mousePosition;
 
-    //}
+    }
 
-    //public void OnEndDrag(PointerEventData eventData)
-    //{
-    //    Debug.Log("End");
-    //    transform.SetParent( ParentAfterDrag);
-    //    if (_Item.IsParentEquippedSlot())
-    //    {
-    //        _Item.EquipItemWithDrag();
-    //    }
-    //    else
-    //    {
-    //        _Item.UnEquipItemWithDrag();
-    //    }
-    //    GetComponentInParent<InventorySlot>().MoveItem(_Item);
-    //    _Item.iconPanel.GetComponent<Image>().raycastTarget = true;
-    //    GetComponent<Button>().interactable = true;
-    //}
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        Debug.Log("End");
+        Item.IconPanel.GetComponent<Image>().raycastTarget = true;
+        GetComponent<Button>().interactable = true;
+    }
 
-    //#endregion
+    #endregion
 }

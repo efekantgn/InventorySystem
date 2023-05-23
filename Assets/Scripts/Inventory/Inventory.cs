@@ -13,6 +13,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private OneHanded _currentOneHanded;
     [SerializeField] private OffHand _currentOffHand;
     [SerializeField] private TwoHanded _currentTwoHand;
+    
 
 
     public List<Item> Items { get => _items; set => _items = value; }
