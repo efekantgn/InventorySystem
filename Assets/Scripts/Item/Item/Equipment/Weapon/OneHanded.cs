@@ -7,7 +7,7 @@ public class OneHanded : Weapon
 
     public override void UseItem()
     {
-        
+        Debug.Log("UseItem");
         if (!IsEquipped && Inventory.Instance.CurrentOneHanded == null)
         {
             EquipItem(MainPanel.Instance.EquipedPanel.transform);
@@ -18,10 +18,11 @@ public class OneHanded : Weapon
         }
         else if (!IsEquipped && Inventory.Instance.CurrentOneHanded != this)
         {
-            transform.parent = OldInventoryPanel;
-            Debug.Log("aa");
+            //UnEquip EquipedItem and equip this item
+            Inventory.Instance.CurrentOneHanded.UnEquipItem(Inventory.Instance.CurrentOneHanded.OldInventoryPanel);
+            EquipItem(MainPanel.Instance.EquipedPanel.transform);
+            //transform.parent = OldInventoryPanel;
         }
-
     }
 
     public override void EquipItem(Transform parent)
@@ -35,5 +36,4 @@ public class OneHanded : Weapon
         base.UnEquipItem(parent);
         Inventory.Instance.CurrentOneHanded = null;
     }
-
 }

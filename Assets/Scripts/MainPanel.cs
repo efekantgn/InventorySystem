@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class MainPanel : MonoBehaviour
+public class MainPanel : MonoBehaviour, IPointerClickHandler
 {
     [Header("Inventory Panels")]
     public GameObject InventoryPanel;
@@ -48,6 +49,16 @@ public class MainPanel : MonoBehaviour
     public void OnCraftButtonClicked()
     {
         ActivateSelectedPanel(CraftPanel.name);
+    }
+
+
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        foreach (var item in Inventory.Instance.Items)
+        {
+            item.UsagePanel.SetActive(false);
+        }
     }
     #endregion
 }

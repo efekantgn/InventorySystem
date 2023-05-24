@@ -14,6 +14,7 @@ public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerE
     private TextMeshProUGUI _infoPanelName;
     private TextMeshProUGUI _infoPanelDescription;
     private Item _item;
+    private bool _mouseIsOver;
     [HideInInspector] private Transform _parentAfterDrag;
     [HideInInspector] private Transform _parentBeforeDrag;
 
@@ -24,6 +25,7 @@ public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerE
     public Item Item { get => _item; set => _item = value; }
     public Transform ParentAfterDrag { get => _parentAfterDrag; set => _parentAfterDrag = value; }
     public Transform ParentBeforeDrag { get => _parentBeforeDrag; set => _parentBeforeDrag = value; }
+    public bool MouseIsOver { get => _mouseIsOver; set => _mouseIsOver = value; }
 
 
 
@@ -41,6 +43,10 @@ public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerE
     #region PointerInterfaceCallbacks
     public void OnPointerClick(PointerEventData eventData)
     {
+        foreach (var item in Inventory.Instance.Items)
+        {
+            item.UsagePanel.SetActive(false);
+        }
         if (eventData.button == InputButton.Right)
         {
             Item.SwitchGeneralUsagePanel();
@@ -50,15 +56,17 @@ public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerE
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        MouseIsOver = true;
         InfoPanelName.text = Item.ItemName;
         InfoPanelDescription.text = Item.ItemDescription;
     }
     public void OnPointerExit(PointerEventData eventData)
     {
+        MouseIsOver = false;
         InfoPanelName.text = "";
         InfoPanelDescription.text = "";
     }
-
+    
     #endregion
 
 
@@ -86,6 +94,7 @@ public class GUIItemMouseEvents : MonoBehaviour, IPointerClickHandler, IPointerE
         Item.IconPanel.GetComponent<Image>().raycastTarget = true;
         GetComponent<Button>().interactable = true;
     }
+
 
     #endregion
 }

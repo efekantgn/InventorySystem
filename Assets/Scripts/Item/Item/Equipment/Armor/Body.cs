@@ -18,7 +18,10 @@ public class Body : Armor
         }
         else if (!IsEquipped && Inventory.Instance.CurrentBody != this)
         {
-            transform.SetParent(OldInventoryPanel);
+            //UnEquip EquipedItem and equip this item
+            Inventory.Instance.CurrentBody.UnEquipItem(Inventory.Instance.CurrentBody.OldInventoryPanel);
+            EquipItem(MainPanel.Instance.EquipedPanel.transform);
+            //transform.SetParent(OldInventoryPanel);
         }
     }
 

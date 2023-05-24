@@ -82,10 +82,7 @@ public class Item : MonoBehaviour
 
         }
     }
-    public void OnClickCloseButton()
-    {
-        SwitchGeneralUsagePanel();
-    }
+    
     #endregion
 
     #region ScriptFunctions
@@ -93,7 +90,7 @@ public class Item : MonoBehaviour
     {
         //Look Child Classes
     }
-
+    
     public virtual void MoveItem(Transform targetParent)
     {
         
@@ -114,6 +111,7 @@ public class Item : MonoBehaviour
 
     public void DropItem(int count)
     {
+        Debug.Log("DropItem");
         DecreaseItemCount(count);
         if (ItemCount <= 0)
         {
@@ -144,8 +142,8 @@ public class Item : MonoBehaviour
 
     public void SwitchGeneralUsagePanel()
     {
-        GeneralPanel.SetActive(!GeneralPanel.activeSelf);
         UsagePanel.SetActive(!UsagePanel.activeSelf);
+        UsagePanel.transform.position = Input.mousePosition;
     }
     public void InitializeDropPanel()
     {
