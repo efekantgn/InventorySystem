@@ -9,6 +9,11 @@ public class Equipment : Item
     public bool IsEquipped { get => _isEquipped; set => _isEquipped = value; }
 
     #region ClickOperations
+
+    /// <summary>
+    /// Equips Item. Also sets OldInventoryPanel
+    /// </summary>
+    /// <param name="parent"></param>
     public virtual void EquipItem(Transform parent)
     {
         if(transform.parent.GetComponent<InventorySlot>()!=null)
@@ -18,6 +23,11 @@ public class Equipment : Item
         IsEquipped= true;
         transform.SetParent(parent);
     }
+
+    /// <summary>
+    /// UnEquips Item.Also sets OldInventoryPanel to null
+    /// </summary>
+    /// <param name="parent"></param>
     public virtual void UnEquipItem(Transform parent)
     {
         IsEquipped= false;

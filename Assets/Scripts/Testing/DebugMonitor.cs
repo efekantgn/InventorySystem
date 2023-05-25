@@ -22,9 +22,13 @@ public class DebugMonitor : MonoBehaviour
         //    BackpackList.text += item.ItemName + "\n";
         //}
         
-        foreach (var item in Inventory.Instance.Items)
+        //foreach (var item in Inventory.Instance.Items)
+        //{
+        //    InventoryText.text += item.ItemName + "\n";
+        //}
+        foreach (var item in CraftingManager.Instance.ItemDatas)
         {
-            InventoryText.text += item.ItemName + "\n";
+            InventoryText.text += item.ItemName + item.ItemCount+ "\n";
         }
     }
 }

@@ -42,25 +42,35 @@ public class Item : MonoBehaviour
     #region UnityCallBacks
     private void Start()
     {
-        if (!ItemStackable)
-        {
-            ItemCount = 1;
-            CountPanel.SetActive(false);
-        }
+        //if (!ItemStackable)
+        //{
+        //    ItemCount = 1;
+        //    CountPanel.SetActive(false);
+        //}
     }
     #endregion
 
     #region UICallbacks
-
+    /// <summary>
+    /// Item Button OnClickEvent Function
+    /// </summary>
     public void OnClickItemButton()
     {
         UseItem();
     }
+
+    /// <summary>
+    /// Use Button OnClickEvent Function
+    /// </summary>
     public void OnClickUseButton()
     {
         UseItem();
         SwitchGeneralUsagePanel();
     }
+
+    /// <summary>
+    /// Move Button OnClickEvent Function
+    /// </summary>
     public void OnClickMoveButton()
     {
         MoveBetweenBackpackAndPocket();
@@ -68,6 +78,9 @@ public class Item : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Drop Button OnClickEvent Function
+    /// </summary>
     public void OnClickDropButton()
     {
         if (ItemCount <= 1)
@@ -86,16 +99,27 @@ public class Item : MonoBehaviour
     #endregion
 
     #region ScriptFunctions
+
+    /// <summary>
+    /// Use Item to its type on child classes its overriding.
+    /// </summary>
     public virtual void UseItem()
     {
         //Look Child Classes
     }
-    
+
+    /// <summary>
+    /// Item Move function. Takes target parent as a parameter.
+    /// </summary>
+    /// <param name="targetParent"></param>
     public virtual void MoveItem(Transform targetParent)
     {
         
     }
 
+    /// <summary>
+    /// Moves item backpack to pocket and reverse.
+    /// </summary>
     public virtual void MoveBetweenBackpackAndPocket()
     {
         
@@ -109,6 +133,10 @@ public class Item : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Destroys Item with count. If item is a stackable, it will decrease item counts.   
+    /// </summary>
+    /// <param name="count"></param>
     public void DropItem(int count)
     {
         Debug.Log("DropItem");
@@ -120,12 +148,20 @@ public class Item : MonoBehaviour
 
     }
 
-    
+    /// <summary>
+    /// Increases item count. Used on stackable items
+    /// </summary>
+    /// <param name="count"></param>
     public void IncreaseItemCount(int count)
     {
         ItemCount += count;
         UpdateUIElements();
     }
+
+    /// <summary>
+    /// Decrease item count. Used on stackable items
+    /// </summary>
+    /// <param name="count"></param>
     public void DecreaseItemCount(int count)
     {
         ItemCount -= count;
@@ -133,6 +169,11 @@ public class Item : MonoBehaviour
     }
 
     
+
+    /// <summary>
+    /// Updates UI Element. This can changes IconPanel sprite and CountPanel Text
+    /// When count change tihs is working.
+    /// </summary>
     public void UpdateUIElements()
     {
         IconPanel.GetComponent<Image>().sprite = ItemIcon;
@@ -140,11 +181,21 @@ public class Item : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Opens/Closes Usage panel menu
+    /// Works when Right Clicked on UI element
+    /// Also sets UsagePanel Position to mouse position.
+    /// </summary>
     public void SwitchGeneralUsagePanel()
     {
         UsagePanel.SetActive(!UsagePanel.activeSelf);
         UsagePanel.transform.position = Input.mousePosition;
     }
+
+    /// <summary>
+    /// Initializes Drop Panel
+    /// Whep Drop Button Pressed on Usage Panel this funciton works.
+    /// </summary>
     public void InitializeDropPanel()
     {
         GameObject dropPanel = MainPanel.Instance.DropPanel;
@@ -159,89 +210,7 @@ public class Item : MonoBehaviour
 
     #endregion
 
-    #region OldScriptFunctions
-    //public bool IsParentEquippedSlot()
-    //{
-    //    if(transform.parent==_equipedSlot.transform)
-    //        return true;
-    //    return false;
-    //}
-
-
-
-    //public void UseItem() 
-    //{
-    //    Debug.Log("ItemUsed");
-    //    InventorySlot inventorySlot= GetComponentInParent<InventorySlot>();
-    //    itemData.ItemCount--;
-    //    if (itemData.ItemCount <=0)
-    //    {
-    //        inventorySlot.RemoveItem(this,InventorySlot.ItemOperation.Remove);
-    //        //Inventory.UpdateUISlot(ItemData);
-    //    }
-    //    inventorySlot.UpdateAllItemsUI();
-    //}
-
-    //public void DropItem(int count) 
-    //{
-
-    //    Debug.Log("DropItem");
-    //    InventorySlot inventorySlot = GetComponentInParent<InventorySlot>();
-    //    itemData.ItemCount -=count;
-    //    if (itemData.ItemCount <=0)
-    //    {
-    //        // Inventory.RemoveItem(this); 
-    //        inventorySlot.RemoveItem(this, InventorySlot.ItemOperation.Remove);
-
-    //    }
-
-    //     inventorySlot.UpdateAllItemsUI();
-    //}
-
-    //public void EquipItemWithDrag()
-    //{
-    //    isEquiped = true;
-    //    InventorySlot oldInventorySlot = GetComponentInParent<InventorySlot>();
-    //    oldInventorySlot.RemoveItem(this, InventorySlot.ItemOperation.Move);
-    //}
-
-    //public void UnEquipItemWithDrag()
-    //{
-    //    isEquiped = false;
-    //    this.oldInventorySlot = null;
-    //}
-
-    //public void EquipItem()
-    //{
-    //    //Remove from current Items
-    //    //Remove from current ItemsUI
-    //    isEquiped = true ;
-    //    InventorySlot oldInventorySlot = GetComponentInParent<InventorySlot>();
-    //    oldInventorySlot.RemoveItem(this, InventorySlot.ItemOperation.Move);
-    //    this.oldInventorySlot = transform.parent.gameObject;
-
-    //    gameObject.transform.SetParent(_equipedSlot.transform);
-
-    //    //Add to parent Items
-    //    //Add to parent ItemsUI
-    //    InventorySlot newInventorySlot = GetComponentInParent<InventorySlot>();
-    //    newInventorySlot.MoveItem(this);
-    //}
-
-    //public void UnEquipItem()
-    //{
-    //    InventorySlot oldInventorySlot = GetComponentInParent<InventorySlot>();
-    //    oldInventorySlot.RemoveItem(this, InventorySlot.ItemOperation.Move);
-
-    //    gameObject.transform.SetParent(this.oldInventorySlot.transform);
-
-    //    InventorySlot newInventorySlot = GetComponentInParent<InventorySlot>();
-    //    newInventorySlot.MoveItem(this);
-    //    isEquiped= false ;
-    //    this.oldInventorySlot = null;
-
-    //}
-    #endregion
+   
 
 }
 

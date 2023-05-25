@@ -123,7 +123,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3664149101296263629}
+      - m_Target: {fileID: 8179996259841885977}
         m_TargetAssemblyTypeName: Item, Assembly-CSharp
         m_MethodName: OnClickMoveButton
         m_Mode: 1
@@ -221,8 +221,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3d5de3033771a224ba4f9b2409012617, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 7763a8944bb89a44883ee2526d4ad9f7, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -513,9 +513,9 @@ GameObject:
   - component: {fileID: 3178117159210312053}
   - component: {fileID: 3178117159210312051}
   - component: {fileID: 7846102246926831176}
-  - component: {fileID: 3664149101296263629}
+  - component: {fileID: 8179996259841885977}
   m_Layer: 5
-  m_Name: IronSword
+  m_Name: IronMaterial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -595,7 +595,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3664149101296263629}
+      - m_Target: {fileID: 8179996259841885977}
         m_TargetAssemblyTypeName: Item, Assembly-CSharp
         m_MethodName: OnClickItemButton
         m_Mode: 1
@@ -619,7 +619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68451ef6d07ae9e488644ee9aded0e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3664149101296263629
+--- !u!114 &8179996259841885977
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -628,22 +628,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 3178117159210312049}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9ce3b5718981fa4e8d4387baf4c23ee, type: 3}
+  m_Script: {fileID: 11500000, guid: da3769d61c1cca245a9da6a1750fa1a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemID: 0
-  _itemName: Sword
-  _itemDescription: +10 dmg
-  _itemStackable: 0
+  _itemID: 500
+  _itemName: IronMaterial
+  _itemDescription: CraftingMaterial
+  _itemStackable: 1
   _itemCount: 1
-  _itemIcon: {fileID: 21300000, guid: 3d5de3033771a224ba4f9b2409012617, type: 3}
+  _itemIcon: {fileID: 21300000, guid: 7763a8944bb89a44883ee2526d4ad9f7, type: 3}
   _iconPanel: {fileID: 3178117158155720577}
   _countPanel: {fileID: 3178117158885566829}
   _generalPanel: {fileID: 5655508336273248182}
   _usagePanel: {fileID: 8040462850799348808}
   _oldInventoryPanel: {fileID: 0}
-  _isEquipped: 0
-  _damage: 10
 --- !u!1 &3178117159797580450
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,7 +900,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3664149101296263629}
+      - m_Target: {fileID: 8179996259841885977}
         m_TargetAssemblyTypeName: Item, Assembly-CSharp
         m_MethodName: OnClickUseButton
         m_Mode: 1
@@ -1272,7 +1270,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3664149101296263629}
+      - m_Target: {fileID: 8179996259841885977}
         m_TargetAssemblyTypeName: Item, Assembly-CSharp
         m_MethodName: OnClickDropButton
         m_Mode: 1

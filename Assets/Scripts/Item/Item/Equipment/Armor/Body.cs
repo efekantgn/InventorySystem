@@ -5,6 +5,12 @@ using UnityEngine;
 public class Body : Armor
 {
 
+
+    /// <summary>
+    /// Overriding from Item
+    /// It checks is item equiped and Looks CurrentBody inside Intentory.
+    /// And the finaly it equips, unequips or unequips equiped item and equips itself.
+    /// </summary>
     public override void UseItem()
     {
         
@@ -24,6 +30,7 @@ public class Body : Armor
             //transform.SetParent(OldInventoryPanel);
         }
     }
+
 
     public override void EquipItem(Transform parent)
     {

@@ -5,6 +5,11 @@ using UnityEngine;
 public class OneHanded : Weapon
 {
 
+    /// <summary>
+    /// Overriding from Item
+    /// It checks is item equiped and Looks CurrentOneHanded inside Intentory.
+    /// And the finaly it equips, unequips or unequips equiped item and equips itself.
+    /// </summary>
     public override void UseItem()
     {
         Debug.Log("UseItem");

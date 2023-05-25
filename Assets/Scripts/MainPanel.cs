@@ -13,6 +13,7 @@ public class MainPanel : MonoBehaviour, IPointerClickHandler
 
     [Header("Craft Panels")]
     public GameObject CraftPanel;
+    public GameObject MaterialSelectionPanel;
 
     [Header("Other Panels")]
     public GameObject DropPanel;
