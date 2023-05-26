@@ -68,7 +68,13 @@ public class Inventory : MonoBehaviour
         Destroy(item.gameObject);
         Items.Remove(item);
     }
-    
+    public void RemoveItem(int itemID)
+    {
+        Item item = FindItemInInventory(itemID);
+        Debug.Log("RemovedItem: " + item);
+        item.RemoveItem(1);
+    }
+
     public virtual void InstantiateUIElement(GameObject item, Transform parent)
     {
         GameObject tmp=Instantiate(item, parent);
@@ -89,9 +95,20 @@ public class Inventory : MonoBehaviour
         return null;
 
     }
+    public Item FindItemInInventory(int itemID)
+    {
+
+        foreach (var item in Items)
+        {
+            if (item.ItemID == itemID)
+                return item;
+        }
+        return null;
+
+    }
     #endregion
 
-    
+
 
     #region AddItemWithTheirData
     //public void AddItem(HeadData itemData,Transform parent) 

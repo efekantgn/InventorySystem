@@ -147,6 +147,16 @@ public class Item : MonoBehaviour
         }
 
     }
+    public void RemoveItem(int count)
+    {
+        Debug.Log("RemoveItem");
+        DecreaseItemCount(count);
+        if (ItemCount <= 0)
+        {
+            Inventory.Instance.RemoveItem(this);
+        }
+
+    }
 
     /// <summary>
     /// Increases item count. Used on stackable items

@@ -6,12 +6,12 @@ using static UnityEditor.Progress;
 
 public class RecieptSlot : MonoBehaviour
 {
-    [SerializeField] private Item _selectedItem;
+    //[SerializeField] private Item _selectedItem;
     private ItemData _selectedData;
     private Image _image;
     private Sprite _sprite;
 
-    public Item SelectedItem { get => _selectedItem; set => _selectedItem = value; }
+    //public Item SelectedItem { get => _selectedItem; set => _selectedItem = value; }
     public Image Image { get => _image; set => _image = value; }
     public ItemData SelectedData { get => _selectedData; set => _selectedData = value; }
     public Sprite Sprite { get => _sprite; set => _sprite = value; }
@@ -19,19 +19,19 @@ public class RecieptSlot : MonoBehaviour
     private void OnDisable()
     {
         
-        SelectedItem = null;
+        //SelectedItem = null;
         Image.sprite = Sprite;
     }
     private void OnEnable()
     {
-        SelectedItem=GetComponent<Item>();
+        //SelectedItem=GetComponent<Item>();
     }
 
     private void Start()
     {
         Image = GetComponent<Image>();
         Sprite = Image.sprite;
-        SelectedItem = gameObject.AddComponent<Item>();
+        //SelectedItem = gameObject.AddComponent<Item>();
     }
 
     public void OnSlotClicked()
@@ -50,9 +50,12 @@ public class RecieptSlot : MonoBehaviour
 
     public void SlotItemSelected(ItemData itemData)
     {
-        Debug.Log(itemData.ItemName);
-        SelectedItem.ItemIcon = itemData.ItemIcon;
-        Image.sprite = SelectedItem.ItemIcon;
+        Debug.Log(SelectedData);
+        Debug.Log(SelectedData.ItemID);
+        SelectedData.ItemIcon = itemData.ItemIcon;
+        Image.sprite = SelectedData.ItemIcon;
+
+        
     }
 
     
