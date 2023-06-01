@@ -47,12 +47,57 @@ public class OutputSlot : MonoBehaviour, IPointerClickHandler
     {
         Image.sprite = Sprite;
     }
-    
-    public void SetOutputDataID(int itemDataID,int deletedID)
+
+    public void ResetRecipts()
     {
-        OutputData.ItemID = addItem.FindItemWithID(itemDataID).ItemID;
-        DeletedId.Add(deletedID);
-        //Image.sprite = addItem.FindItemWithID(itemDataID).ItemIcon;
+        foreach (var item in RecieptSlots)
+        {
+            item.SelectedData = null;
+        }
+    }
+    public void SetOutputDataID()
+    {
+        OutputData.ItemID = -1;
+        Image.sprite = Sprite;
+    }
+
+    public void SetOutputDataID(int itemDataID,int deletedID1)
+    {
+        Item item = addItem.FindItemWithID(itemDataID);
+        OutputData.ItemID = item.ItemID;
+        Image.sprite = item.ItemIcon;
+        DeletedId.Add(deletedID1);
+        
+    }
+    public void SetOutputDataID(int itemDataID, int deletedID1, int deletedID2)
+    {
+        Item item = addItem.FindItemWithID(itemDataID);
+        OutputData.ItemID = item.ItemID;
+        Image.sprite = item.ItemIcon;
+        DeletedId.Add(deletedID1);
+        DeletedId.Add(deletedID2);
+
+    }
+    public void SetOutputDataID(int itemDataID, int deletedID1, int deletedID2, int deletedID3)
+    {
+        Item item = addItem.FindItemWithID(itemDataID);
+        OutputData.ItemID = item.ItemID;
+        Image.sprite = item.ItemIcon;
+        DeletedId.Add(deletedID1);
+        DeletedId.Add(deletedID2);
+        DeletedId.Add(deletedID3);
+
+    }
+    public void SetOutputDataID(int itemDataID, int deletedID1, int deletedID2, int deletedID3, int deletedID4)
+    {
+        Item item = addItem.FindItemWithID(itemDataID);
+        OutputData.ItemID = item.ItemID;
+        Image.sprite = item.ItemIcon;
+        DeletedId.Add(deletedID1);
+        DeletedId.Add(deletedID2);
+        DeletedId.Add(deletedID3);
+        DeletedId.Add(deletedID4);
+
     }
 
     public void SetCraftedItem(int AddingItemID,int RemovingItemID)
@@ -61,46 +106,104 @@ public class OutputSlot : MonoBehaviour, IPointerClickHandler
         addItem.RemoveItemWithID(RemovingItemID);
     }
 
+    public void SetCraftedItem(int AddingItemID, int RemovingItemID, int RemovingItemID2)
+    {
+        addItem.AddItemWithID(AddingItemID);
+        addItem.RemoveItemWithID(RemovingItemID);
+        addItem.RemoveItemWithID(RemovingItemID2);
+    }
+    public void SetCraftedItem(int AddingItemID, int RemovingItemID, int RemovingItemID2, int RemovingItemID3)
+    {
+        addItem.AddItemWithID(AddingItemID);
+        addItem.RemoveItemWithID(RemovingItemID);
+        addItem.RemoveItemWithID(RemovingItemID2);
+        addItem.RemoveItemWithID(RemovingItemID3);
+    }
+    public void SetCraftedItem(int AddingItemID, int RemovingItemID, int RemovingItemID2, int RemovingItemID3, int RemovingItemID4)
+    {
+        addItem.AddItemWithID(AddingItemID);
+        addItem.RemoveItemWithID(RemovingItemID);
+        addItem.RemoveItemWithID(RemovingItemID2);
+        addItem.RemoveItemWithID(RemovingItemID3);
+        addItem.RemoveItemWithID(RemovingItemID4);
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         //Crafting Here
-        CraftItem(OutputData.ItemID, RecieptSlots[0].SelectedData.ItemID);
 
-        //List<ItemData> itemDatas = new List<ItemData>();
-        //for (int i = 0; i < RecieptSlots.Length; i++)
-        //{
-        //    if (RecieptSlots[i].SelectedData != null)
-        //    {
-        //        itemDatas.Add(RecieptSlots[i].SelectedData);
-                
-        //    }
-        //}
-        //switch (itemDatas.Count)
-        //{
-        //    case 1:
-        //        CraftingManager.Instance.CheckCraftableItem(itemDatas[0]);
-        //        break;
-        //    case 2:
-        //        //CheckCraftableItem için 2 parametre kullanan fonksiyonu yazýlacak.
-        //        //CraftingManager.Instance.CheckCraftableItem(itemDatas[0],itemDatas[1]);
-        //        break; 
-        //    case 3:
-        //        //CheckCraftableItem için 3 parametre kullanan fonksiyonu yazýlacak.
-        //        //CraftingManager.Instance.CheckCraftableItem(itemDatas[0],itemDatas[1],itemDatas[2]);
-        //        break;
-        //    case 4:
-        //        //CheckCraftableItem için 4 parametre kullanan fonksiyonu yazýlacak.
-        //        //CraftingManager.Instance.CheckCraftableItem(itemDatas[0],itemDatas[1],itemDatas[2],itemDatas[3]);
-        //        break;
 
-        //    default:
-        //        break;
-        //}
+        //CraftItem(OutputData.ItemID, RecieptSlots[2].SelectedData.ItemID);
+        List<ItemData> itemDatas = new List<ItemData>();
+        for (int i = 0; i < RecieptSlots.Length; i++)
+        {
+            if (RecieptSlots[i].SelectedData != null)
+            {
+                itemDatas.Add(RecieptSlots[i].SelectedData);
+
+            }
+        }
+        switch (itemDatas.Count)
+        {
+            case 1:
+                CraftItem(OutputData.ItemID, itemDatas[0].ItemID);
+                break;
+            case 2:
+                //CheckCraftableItem için 2 parametre kullanan fonksiyonu yazýlacak.
+                CraftItem(OutputData.ItemID, itemDatas[0].ItemID, itemDatas[1].ItemID);
+                break;
+            case 3:
+                //CheckCraftableItem için 3 parametre kullanan fonksiyonu yazýlacak.
+                CraftItem(OutputData.ItemID, itemDatas[0].ItemID, itemDatas[1].ItemID, itemDatas[2].ItemID);
+
+                break;
+            case 4:
+                //CheckCraftableItem için 4 parametre kullanan fonksiyonu yazýlacak.
+                CraftItem(OutputData.ItemID, itemDatas[0].ItemID, itemDatas[1].ItemID, itemDatas[2].ItemID, itemDatas[3].ItemID);
+                break;
+
+            default:
+                break;
+        }
+        EmptySlots(RecieptSlots);
+        CraftingManager.Instance.ClearCraftingPanel();
+        CraftingManager.Instance.InitializeCraftingPanel();
+
     }
 
     public void CraftItem(int AddingId,int RemovingID)
     {
+        
         SetCraftedItem(AddingId, RemovingID);
         DeletedId.Remove(RemovingID);
     }
+    public void CraftItem(int AddingId, int RemovingID,int RemovingID2)
+    {
+
+        SetCraftedItem(AddingId, RemovingID, RemovingID2);
+        DeletedId.Remove(RemovingID);
+    }
+    public void CraftItem(int AddingId, int RemovingID, int RemovingID2, int RemovingID3)
+    {
+        SetCraftedItem(AddingId, RemovingID, RemovingID2, RemovingID3);
+        DeletedId.Remove(RemovingID);
+    }
+    public void CraftItem(int AddingId, int RemovingID, int RemovingID2, int RemovingID3, int RemovingID4)
+    {
+        SetCraftedItem(AddingId, RemovingID, RemovingID2,RemovingID3,RemovingID4);
+        DeletedId.Remove(RemovingID);
+    }
+
+    public void EmptySlots(RecieptSlot[] recieptSlot)
+    {
+        Image.sprite = Sprite;
+        foreach (var slot in recieptSlot)
+        {
+            slot.ResetImage();
+            slot.SelectedData = null;
+
+        }
+    }
+
+    
 }

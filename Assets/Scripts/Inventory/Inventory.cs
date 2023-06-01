@@ -71,7 +71,6 @@ public class Inventory : MonoBehaviour
     public void RemoveItem(int itemID)
     {
         Item item = FindItemInInventory(itemID);
-        Debug.Log("RemovedItem: " + item);
         item.RemoveItem(1);
     }
 

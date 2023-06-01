@@ -29,6 +29,7 @@ public class MaterialSelection : MonoBehaviour
         //SelectedSlot.AddToListAgain(SelectedSlot.SelectedData);
         SelectedSlot.SelectedData=null;
         SelectedSlot.Image.sprite = SelectedSlot.Sprite;
+        CraftingManager.Instance.InitializeCraft();
         MainPanel.Instance.MaterialSelectionPanel.SetActive(false);
     }
 

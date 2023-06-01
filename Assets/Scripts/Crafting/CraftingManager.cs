@@ -11,14 +11,21 @@ public class CraftingManager : MonoBehaviour
     private List<ItemData> _itemDatas=new List<ItemData>();
 
     private Dictionary<ItemData, ItemData> _oneItemRecepies=new Dictionary<ItemData, ItemData>();
+    private Dictionary<ItemData, List<ItemData>> _twoItemRecepies=new Dictionary<ItemData, List<ItemData>>();
+    private Dictionary<ItemData, List<ItemData>> _threeItemRecepies=new Dictionary<ItemData, List<ItemData>>();
+    private Dictionary<ItemData, List<ItemData>> _fourItemRecepies=new Dictionary<ItemData, List<ItemData>>();
 
     public List<ItemData> ItemDatas { get => _itemDatas; set => _itemDatas = value; }
     public Dictionary<ItemData, ItemData> OneItemRecepies { get => _oneItemRecepies; set => _oneItemRecepies = value; }
+    public Dictionary<ItemData, List<ItemData>> TwoItemRecepies { get => _twoItemRecepies; set => _twoItemRecepies = value; }
+    public Dictionary<ItemData, List<ItemData>> ThreeItemRecepies { get => _threeItemRecepies; set => _threeItemRecepies = value; }
+    public Dictionary<ItemData, List<ItemData>> FourItemRecepies { get => _fourItemRecepies; set => _fourItemRecepies = value; }
 
     #region UnityCallbacks
 
     private static CraftingManager _instance;
     public static CraftingManager Instance { get => _instance; set => _instance = value; }
+
     private void Awake()
     {
         if (Instance == null || Instance != this)
@@ -33,30 +40,72 @@ public class CraftingManager : MonoBehaviour
 
     private void Start()
     {
-        //ItemData itemData = new ItemData();
-        //itemData.SetItemDatas("sword", true, 1, testSprite, 0);
-        //ItemData itemData2 = new ItemData();
-        //itemData2.SetItemDatas("iron", true, 1, testSprite, 500);
-        //OneItemRecepies.Add(itemData,itemData2);
-
+        
         CSVReader.Instance.ReadCSV();
     }
 
     private void OnEnable()
     {
-        
+        InitializeCraftingPanel();
+
+
+    }
+    private void OnDisable()
+    {
+        ClearCraftingPanel();
+        OutputSlot.Instance.ResetRecipts();
+    }
+    #endregion
+
+    #region GetInventoryItemsToCraftingMenu
+
+    public void InitializeCraftingPanel()
+    {
         foreach (var item in Inventory.Instance.Items)
         {
             AddToItemDatas(item);
         }
     }
-    private void OnDisable()
+
+    public void ClearCraftingPanel()
     {
         ItemDatas.Clear();
     }
-    #endregion
 
-    #region GetInventoryItemsToCraftingMenu
+    public void InitializeCraft()
+    {
+        List<ItemData> itemDatas = new List<ItemData>();
+        for (int i = 0; i < OutputSlot.Instance.RecieptSlots.Length; i++)
+        {
+            if (OutputSlot.Instance.RecieptSlots[i].SelectedData != null)
+            {
+                itemDatas.Add(OutputSlot.Instance.RecieptSlots[i].SelectedData);
+
+            }
+        }
+        switch (itemDatas.Count)
+        {
+            case 1:
+                CraftingManager.Instance.CheckOneItemRecipt(itemDatas[0]);
+                break;
+            case 2:
+                //CheckCraftableItem için 2 parametre kullanan fonksiyonu yazýlacak.
+                CraftingManager.Instance.CheckTwoItemRecipt(itemDatas[0],itemDatas[1]);
+                break;
+            case 3:
+                //CheckCraftableItem için 3 parametre kullanan fonksiyonu yazýlacak.
+                CraftingManager.Instance.CheckThreeItemRecipt(itemDatas[0],itemDatas[1],itemDatas[2]);
+                break;
+            case 4:
+                //CheckCraftableItem için 4 parametre kullanan fonksiyonu yazýlacak.
+                CraftingManager.Instance.CheckFourItemRecipt(itemDatas[0],itemDatas[1],itemDatas[2],itemDatas[3]);
+                break;
+
+            default:
+                break;
+        }
+    }
+
     public ItemData ConvertToItemData(Item item)
     {
         ItemData itemData = new ItemData();
@@ -123,32 +172,170 @@ public class CraftingManager : MonoBehaviour
 
     #endregion
 
-    public void CheckCraftableItem(ItemData itemData)
+
+    public void CheckOneItemRecipt(ItemData itemData)
     {
         for (int i = 0; i < OneItemRecepies.Count; i++)
         {
-            Debug.Log(itemData.ItemID);
-            if (itemData.ItemID == OneItemRecepies.ElementAt(i).Value.ItemID)
+            List<int> ids = new List<int>();
+            ids.Add(OneItemRecepies.ElementAt(i).Value.ItemID);
+            if (ids.Contains(itemData.ItemID))
             {
-                Debug.Log(OneItemRecepies.ElementAt(i).Key.ItemID + " crafted.");
-                Debug.Log(OneItemRecepies.ElementAt(i).Value.ItemID + " Key used.");
                 OutputSlot.Instance.SetOutputDataID(OneItemRecepies.ElementAt(i).Key.ItemID, OneItemRecepies.ElementAt(i).Value.ItemID);
-                
+
                 break;
             }
             else
             {
-                //ItemData nullKey = new ItemData();
-                //nullKey.SetItemDatas("", true, 1, nullSprite, -1);
-                //OutputSlot.Instance.SetIcon(nullKey.ItemID);
-
-                Debug.Log(itemData.ItemName + " not in Dictionary.");
-                Debug.Log("Crafting failed");
+                OutputSlot.Instance.SetOutputDataID();
             }
 
         }
-        
+    }
 
+    public void CheckTwoItemRecipt(ItemData itemData,ItemData itemData2)
+    {
+        for (int i = 0; i < TwoItemRecepies.Count; i++)
+        {
+            List<int> ids = new List<int>();
+            ids.Add(TwoItemRecepies.ElementAt(i).Value[0].ItemID);
+            ids.Add(TwoItemRecepies.ElementAt(i).Value[1].ItemID);
+
+            //Recipt1 TwoItemRecepiesin içindeki Material1 stünunda var mý?
+            //if (ids.Contains(itemData.ItemID)
+            //    && ids.Contains(itemData2.ItemID))
+            //{
+            //    OutputSlot.Instance.SetOutputDataID(TwoItemRecepies.ElementAt(i).Key.ItemID, TwoItemRecepies.ElementAt(i).Value[0].ItemID, TwoItemRecepies.ElementAt(i).Value[1].ItemID);
+
+            //    break;
+            //}
+            //else
+            //{
+            //    OutputSlot.Instance.SetOutputDataID();
+            //}
+            if (ids.Contains(itemData.ItemID))
+            {
+                ids.Remove(itemData.ItemID);
+                if (ids.Contains(itemData2.ItemID))
+                {
+                    ids.Remove(itemData2.ItemID);
+                        
+                    OutputSlot.Instance.SetOutputDataID(TwoItemRecepies.ElementAt(i).Key.ItemID, TwoItemRecepies.ElementAt(i).Value[0].ItemID, TwoItemRecepies.ElementAt(i).Value[1].ItemID);
+
+                    break;
+                    
+                }
+                else
+                    OutputSlot.Instance.SetOutputDataID();
+            }
+            else
+                OutputSlot.Instance.SetOutputDataID();
+
+
+        }
+    }
+    public void CheckThreeItemRecipt(ItemData itemData, ItemData itemData2,ItemData itemData3)
+    {
+        ///itemDatalarýn idlerini liste içerisnde tutup conains ile buna bak ThreeItemRecepies.ElementAt(i).Value[0].ItemID
+        
+        for (int i = 0; i < ThreeItemRecepies.Count; i++)
+        {
+            List<int> ids= new List<int>();
+            ids.Add(ThreeItemRecepies.ElementAt(i).Value[0].ItemID);
+            ids.Add(ThreeItemRecepies.ElementAt(i).Value[1].ItemID);
+            ids.Add(ThreeItemRecepies.ElementAt(i).Value[2].ItemID);
+
+            //if (ids.Contains(itemData.ItemID)
+            //    && ids.Contains(itemData2.ItemID)
+            //    && ids.Contains(itemData3.ItemID))
+            //{
+            //    OutputSlot.Instance.SetOutputDataID(ThreeItemRecepies.ElementAt(i).Key.ItemID, ThreeItemRecepies.ElementAt(i).Value[0].ItemID, ThreeItemRecepies.ElementAt(i).Value[1].ItemID, ThreeItemRecepies.ElementAt(i).Value[2].ItemID);
+            
+            //    break;
+            //}
+            //else
+            //{
+            
+            //    OutputSlot.Instance.SetOutputDataID();
+            //}
+
+            if (ids.Contains(itemData.ItemID))
+            {
+                ids.Remove(itemData.ItemID);
+                if (ids.Contains(itemData2.ItemID))
+                {
+                    ids.Remove(itemData2.ItemID);
+                    if (ids.Contains(itemData3.ItemID))
+                    {
+                        ids.Remove(itemData3.ItemID);
+                        OutputSlot.Instance.SetOutputDataID(ThreeItemRecepies.ElementAt(i).Key.ItemID, ThreeItemRecepies.ElementAt(i).Value[0].ItemID, ThreeItemRecepies.ElementAt(i).Value[1].ItemID, ThreeItemRecepies.ElementAt(i).Value[2].ItemID);
+
+                        break;
+                    }
+                    else
+                        OutputSlot.Instance.SetOutputDataID();
+                }
+                else
+                    OutputSlot.Instance.SetOutputDataID();
+            }
+            else
+                OutputSlot.Instance.SetOutputDataID();
+
+        }
+    }
+    public void CheckFourItemRecipt(ItemData itemData, ItemData itemData2, ItemData itemData3, ItemData itemData4)
+    {
+        for (int i = 0; i < FourItemRecepies.Count; i++)
+        {
+            List<int> ids = new List<int>();
+            ids.Add(FourItemRecepies.ElementAt(i).Value[0].ItemID);
+            ids.Add(FourItemRecepies.ElementAt(i).Value[1].ItemID);
+            ids.Add(FourItemRecepies.ElementAt(i).Value[2].ItemID);
+            ids.Add(FourItemRecepies.ElementAt(i).Value[3].ItemID);
+            
+            //if (ids.Contains(itemData.ItemID)
+            //    && ids.Contains(itemData2.ItemID)
+            //    && ids.Contains(itemData3.ItemID)
+            //    && ids.Contains(itemData4.ItemID))
+            //{
+            //    OutputSlot.Instance.SetOutputDataID(FourItemRecepies.ElementAt(i).Key.ItemID, FourItemRecepies.ElementAt(i).Value[0].ItemID, FourItemRecepies.ElementAt(i).Value[1].ItemID, FourItemRecepies.ElementAt(i).Value[2].ItemID, FourItemRecepies.ElementAt(i).Value[3].ItemID);
+
+            //    break;
+            //}
+            //else
+            //{
+            //    OutputSlot.Instance.SetOutputDataID();
+            //}
+
+            if (ids.Contains(itemData.ItemID))
+            {
+                ids.Remove(itemData.ItemID);
+                if (ids.Contains(itemData2.ItemID))
+                {
+                    ids.Remove(itemData2.ItemID);
+                    if (ids.Contains(itemData3.ItemID))
+                    {
+                        ids.Remove(itemData3.ItemID);
+                        if (ids.Contains(itemData4.ItemID))
+                        {
+                            OutputSlot.Instance.SetOutputDataID(FourItemRecepies.ElementAt(i).Key.ItemID, FourItemRecepies.ElementAt(i).Value[0].ItemID, FourItemRecepies.ElementAt(i).Value[1].ItemID, FourItemRecepies.ElementAt(i).Value[2].ItemID);
+                            break;
+
+                        }
+                        else
+                            OutputSlot.Instance.SetOutputDataID();
+                    }
+                    else
+                        OutputSlot.Instance.SetOutputDataID();
+                }
+                else
+                    OutputSlot.Instance.SetOutputDataID();
+            }
+            else
+                OutputSlot.Instance.SetOutputDataID();
+
+
+        }
     }
 
 }

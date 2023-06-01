@@ -50,8 +50,6 @@ public class RecieptSlot : MonoBehaviour
 
     public void SlotItemSelected(ItemData itemData)
     {
-        Debug.Log(SelectedData);
-        Debug.Log(SelectedData.ItemID);
         SelectedData.ItemIcon = itemData.ItemIcon;
         Image.sprite = SelectedData.ItemIcon;
 
@@ -70,6 +68,11 @@ public class RecieptSlot : MonoBehaviour
         {
             CraftingManager.Instance.IncreaseItemDataCount(itemData);
         }
+    }
+
+    public void ResetImage()
+    {
+        Image.sprite = Sprite;
     }
 
     

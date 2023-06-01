@@ -139,7 +139,6 @@ public class Item : MonoBehaviour
     /// <param name="count"></param>
     public void DropItem(int count)
     {
-        Debug.Log("DropItem");
         DecreaseItemCount(count);
         if (ItemCount <= 0)
         {
@@ -149,7 +148,6 @@ public class Item : MonoBehaviour
     }
     public void RemoveItem(int count)
     {
-        Debug.Log("RemoveItem");
         DecreaseItemCount(count);
         if (ItemCount <= 0)
         {
