@@ -8,11 +8,11 @@ public class Inventory : MonoBehaviour
     [SerializeField] private List<Item> _items = new List<Item>();
 
     [SerializeField] private Body _currentBody;
-    [SerializeField] private Head _currentHead;
-    [SerializeField] private Foot _currentFoot;
-    [SerializeField] private OneHanded _currentOneHanded;
-    [SerializeField] private OffHand _currentOffHand;
-    [SerializeField] private TwoHanded _currentTwoHand;
+    [SerializeField]private Head _currentHead;
+    [SerializeField]private Foot _currentFoot;
+    [SerializeField]private OneHanded _currentOneHanded;
+    [SerializeField]private OffHand _currentOffHand;
+    [SerializeField]private TwoHanded _currentTwoHand;
     
 
 

@@ -6,8 +6,7 @@ using UnityEngine;
 
 public class CraftingManager : MonoBehaviour
 {
-    public Sprite testSprite;
-    public Sprite nullSprite;
+    
     private List<ItemData> _itemDatas=new List<ItemData>();
 
     private Dictionary<ItemData, ItemData> _oneItemRecepies=new Dictionary<ItemData, ItemData>();

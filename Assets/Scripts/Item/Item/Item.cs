@@ -8,12 +8,18 @@ public class Item : MonoBehaviour
 {
     #region ItemSO variables
 
-    [SerializeField] private int _itemID;
-    [SerializeField] private string _itemName;
-    [SerializeField] private string _itemDescription;
-    [SerializeField] private bool _itemStackable;
-    [SerializeField] private int _itemCount = 1;
-    [SerializeField] private Sprite _itemIcon;
+    [SerializeField] 
+    private int _itemID;
+    [SerializeField] 
+    private string _itemName;
+    [SerializeField][TextArea()]
+    private string _itemDescription;
+    [SerializeField] 
+    private bool _itemStackable;
+    [SerializeField] 
+    private int _itemCount = 1;
+    [SerializeField] 
+    private Sprite _itemIcon;
 
     public string ItemName { get => _itemName; set => _itemName = value; }
     public string ItemDescription { get => _itemDescription; set => _itemDescription = value; }

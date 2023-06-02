@@ -22,6 +22,7 @@ public class DebugMonitor : MonoBehaviour
 
     private void Update()
     {
+        if(CraftingManager.Instance==null) return;
         InventoryText.text = "";
         InventoryText1.text = "";
         InventoryText2.text = "";

@@ -12,10 +12,11 @@ public class OneHanded : Weapon
     /// </summary>
     public override void UseItem()
     {
-        Debug.Log("UseItem");
+        
         if (!IsEquipped && Inventory.Instance.CurrentOneHanded == null)
         {
             EquipItem(MainPanel.Instance.EquipedPanel.transform);
+            UnEquipTwoHanded();
         }
         else if(IsEquipped && Inventory.Instance.CurrentOneHanded == this)
         {
@@ -23,6 +24,7 @@ public class OneHanded : Weapon
         }
         else if (!IsEquipped && Inventory.Instance.CurrentOneHanded != this)
         {
+            UnEquipTwoHanded();
             //UnEquip EquipedItem and equip this item
             Inventory.Instance.CurrentOneHanded.UnEquipItem(Inventory.Instance.CurrentOneHanded.OldInventoryPanel);
             EquipItem(MainPanel.Instance.EquipedPanel.transform);
@@ -40,5 +42,13 @@ public class OneHanded : Weapon
     {
         base.UnEquipItem(parent);
         Inventory.Instance.CurrentOneHanded = null;
+    }
+    public void UnEquipTwoHanded()
+    {
+        if (Inventory.Instance.CurrentTwoHand != null)
+        {
+            Inventory.Instance.CurrentTwoHand.UnEquipItem(Inventory.Instance.CurrentTwoHand.OldInventoryPanel);
+        }
+
     }
 }

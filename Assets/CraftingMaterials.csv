@@ -1,0 +1,8 @@
+CraftedItemID,Material1ID,Material2ID,Material3ID,Material4ID
+IronMaterial,Sword,,,
+IronMaterial,Iron Chestplate,,,
+Sword,IronMaterial,IronMaterial,,
+Iron Chestplate,IronMaterial,IronMaterial,IronMaterial,IronMaterial
+Hammer,Sword,IronMaterial,IronMaterial,
+IronMaterial,Hammer,,,
+AppleBucket,Apple,Apple,Apple,Apple
